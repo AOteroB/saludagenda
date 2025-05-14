@@ -19,34 +19,44 @@
                 </div>
 
                 <div class="card-body">
-                    {{-- Nombre --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Nombre:</label>
-                        <p class="form-control-plaintext">{{ $user->name }}</p>
-                    </div>
+                    @php
+                        $fields = [
+                            'Nombre' => $user->name,
+                            'Correo Electrónico' => $user->email,
+                        ];
+                    @endphp
 
-                    {{-- Email --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Correo Electrónico:</label>
-                        <p class="form-control-plaintext">{{ $user->email }}</p>
-                    </div>
-
+                    @foreach($fields as $label => $value)
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <strong>{{ $label }}:</strong>
+                            </div>
+                            <div class="col-8">
+                                <p class="form-control-plaintext">{{ $value }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                
                     {{-- Rol --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Rol:</label>
-                        <p class="form-control-plaintext text-capitalize"> 
-                            @foreach ($user->getRoleNames() as $role)
-                                @php
-                                    $badgeClass = match($role) {
-                                        'admin' => 'bg-danger',
-                                        'doctor' => 'bg-primary',
-                                        'patient' => 'bg-success',
-                                        default => 'bg-secondary',
-                                    };
-                                @endphp
-                                <span class="badge {{ $badgeClass }}">{{ ucfirst($role) }}</span>
-                            @endforeach
-                        </p>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <strong>Rol:</strong>
+                        </div>
+                        <div class="col-8">
+                            <p class="form-control-plaintext">
+                                @foreach ($user->getRoleNames() as $role)
+                                    @php
+                                        $badgeClass = match($role) {
+                                            'admin' => 'bg-danger',
+                                            'doctor' => 'bg-primary',
+                                            'patient' => 'bg-success',
+                                            default => 'bg-secondary',
+                                        };
+                                    @endphp
+                                    <span class="badge {{ $badgeClass }}">{{ ucfirst($role) }}</span>
+                                @endforeach
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -91,6 +101,22 @@
     .btn-warning:hover {
         background-color: #ec971f;
         border-color: #ec971f;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .row .col-4 {
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+    }
+
+    .row .col-8 {
+        text-align: right;
     }
 </style>
 @endpush

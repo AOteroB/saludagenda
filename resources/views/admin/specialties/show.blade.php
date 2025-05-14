@@ -20,37 +20,28 @@
                 </div>
 
                 <div class="card-body">
-                    {{-- Nombre --}}
-                    <div class="row mb-3">
-                        <div class="col-4">
-                            <strong>Nombre:</strong>
-                        </div>
-                        <div class="col-8">
-                            <p class="form-control-plaintext">{{ $specialty->name }}</p>
-                        </div>
-                    </div>
+                    {{-- Campos simples --}}
+                    @php
+                        $fields = [
+                            'Nombre' => $specialty->name,
+                            'Teléfono' => $specialty->phone ?? 'No especificado',
+                            'Ubicación' => $specialty->location ?? 'No especificada',
+                            'Descripción' => $specialty->description ?? 'No especificada',
+                        ];
+                    @endphp
 
-                    {{-- Teléfono --}}
-                    <div class="row mb-3">
-                        <div class="col-4">
-                            <strong>Teléfono:</strong>
+                    @foreach($fields as $label => $value)
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <strong>{{ $label }}:</strong>
+                            </div>
+                            <div class="col-8">
+                                <p class="form-control-plaintext">{{ $value }}</p>
+                            </div>
                         </div>
-                        <div class="col-8">
-                            <p class="form-control-plaintext">{{ $specialty->phone ?? 'No especificado' }}</p>
-                        </div>
-                    </div>
+                    @endforeach
 
-                    {{-- Ubicación --}}
-                    <div class="row mb-3">
-                        <div class="col-4">
-                            <strong>Ubicación:</strong>
-                        </div>
-                        <div class="col-8">
-                            <p class="form-control-plaintext">{{ $specialty->location ?? 'No especificada' }}</p>
-                        </div>
-                    </div>
-
-                    {{-- Estado --}}
+                    {{-- Estado con badge --}}
                     <div class="row mb-3">
                         <div class="col-4">
                             <strong>Estado:</strong>
@@ -64,17 +55,7 @@
                         </div>
                     </div>
 
-                    {{-- Descripción --}}
-                    <div class="row mb-3">
-                        <div class="col-4">
-                            <strong>Descripción:</strong>
-                        </div>
-                        <div class="col-8">
-                            <p class="form-control-plaintext">{{ $specialty->description ?? 'No especificada' }}</p>
-                        </div>
-                    </div>
-
-                    {{-- Horarios Disponibles --}}
+                    {{-- Horarios Disponibles con botón --}}
                     <div class="row mb-3">
                         <div class="col-4">
                             <strong>Horarios Disponibles:</strong>
@@ -87,10 +68,14 @@
                     </div>
                 </div>
 
+                {{-- Botones --}}
                 <div class="card-footer">
                     <div class="d-flex justify-content-between w-100">
                         <a href="{{ route('admin.specialties.index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left me-1"></i> Volver atrás
+                        </a>
+                        <a href="{{ route('admin.specialties.edit', $specialty->id) }}" class="btn btn-warning text-white">
+                            <i class="fas fa-edit me-1"></i> Editar Especialidad
                         </a>
                     </div>
                 </div>
