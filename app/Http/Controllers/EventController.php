@@ -205,4 +205,48 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * Generar reporte de citas en PDF
+     */
+    public function pdf()
+    {
+        $events = Event::all();
+        $pdf = \PDF::loadView('admin.events.pdf', compact('events'));
+        
+        //Incluir pie de página y numeración
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_text(20,800, "Impreso por: ".Auth::user()->email, null, 10, array(0,0,0));
+        $canvas->page_text(270,800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
+        $canvas->page_text(450,800, "Fecha: ". \Carbon\Carbon::now()->format('d/m/Y')." - ".\Carbon\Carbon::now()->format('H:i'), null, 10, array(0,0,0));
+        
+        return $pdf->stream();
+    }
+
+    /**
+     * Generar filtrado de citas en PDF
+     */
+    public function pdf_dates(Request $request)
+    {
+
+        $start_date = $request->input('fecha_inicio');
+        $end_date = $request->input('fecha_fin');
+        $events = Event::whereBetween('start', [$start_date, $end_date])->get();
+
+        $start_date_formatted = \Carbon\Carbon::parse($start_date)->format('d/m/Y');
+        $end_date_formatted = \Carbon\Carbon::parse($end_date)->format('d/m/Y');
+        $pdf = \PDF::loadView('admin.events.pdf_dates', compact('events', 'start_date_formatted' , 'end_date_formatted'));
+        
+        //Incluir pie de página y numeración
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_text(20,800, "Impreso por: ".Auth::user()->email, null, 10, array(0,0,0));
+        $canvas->page_text(270,800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
+        $canvas->page_text(450,800, "Fecha: ". \Carbon\Carbon::now()->format('d/m/Y')." - ".\Carbon\Carbon::now()->format('H:i'), null, 10, array(0,0,0));
+        
+        return $pdf->stream();
+    }
+
 }

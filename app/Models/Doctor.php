@@ -52,4 +52,13 @@ class Doctor extends Model
         return $this->hasMany(Event::class);
     }
     
+    /**
+     * Relación con el hisrotial medico.
+     * Un doctor tiene muchas historiales.
+     */
+        public function medical_history()
+    {
+        return $this->hasMany(MedicalHistory::class);
+    }
+    
 }

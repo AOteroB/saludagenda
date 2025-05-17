@@ -52,9 +52,9 @@ class RoleSeeder extends Seeder
             'admin.appointments.index', 'admin.appointments.create', 'admin.appointments.store', 'admin.appointments.show',
             'admin.appointments.edit', 'admin.appointments.update', 'admin.appointments.destroy',
 
-            //Permisos para configuraciones
-            'admin.configurations.index', 'admin.configurations.create', 'admin.configurations.store', 'admin.configurations.show',
-            'admin.configurations.edit', 'admin.configurations.update', 'admin.configurations.destroy',
+            //Permisos para historiales médicos
+            'admin.medical_histories.index', 'admin.medical_histories.create', 'admin.medical_histories.store', 'admin.medical_histories.show',
+            'admin.medical_histories.edit', 'admin.medical_histories.update', 'admin.medical_histories.destroy',
         ];
 
         foreach ($permissions as $permission) {
@@ -71,6 +71,9 @@ class RoleSeeder extends Seeder
             'admin.patients.index', 'admin.patients.show', 'admin.patients.edit', 'admin.patients.update',
             'admin.specialties.index', 'admin.specialties.show', 'admin.schedules.index', 'admin.schedules.show',
             'admin.appointments.index', 'admin.appointments.show',
+            'admin.medical_histories.index', 'admin.medical_histories.create', 'admin.medical_histories.store', 
+            'admin.medical_histories.show', 'admin.medical_histories.edit', 'admin.medical_histories.update', 
+            'admin.medical_histories.destroy',
         ])->get();
         $doctor->syncPermissions($doctorPermissions);
 
@@ -80,7 +83,8 @@ class RoleSeeder extends Seeder
             'admin.specialties.index','admin.specialties.show', 
             'admin.schedules.index', 'admin.schedules.show',
             'admin.appointments.create', 'admin.appointments.show', 'admin.appointments.destroy',
-        ])->get();
+            'admin.medical_histories.show'
+            ])->get();
         $patient->syncPermissions($patientPermissions);
     }
 }

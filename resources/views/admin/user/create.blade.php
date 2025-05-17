@@ -1,101 +1,133 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid">
+
+<div class="container py-4">
     <div class="row justify-content-center mb-4">
-        <div class="col-md-8">
-            <h2 class="text-primary" style="color: #2d5eaf !important"><i class="fas fa-user-plus"></i> Registro de Nuevo Usuario</h2>
-            <p class="text-muted">Complete el siguiente formulario para agregar un nuevo usuario al sistema.</p>
+        <div class="col-md-8 text-left">
+            <h2 class="text-primary mb-1"><i class="fas fa-user-plus me-2" style="margin-right: 10px"></i>Registrar Nuevo Usuario</h2>
+            <p class="text-secondary mb-0">Complete el siguiente formulario para agregar un nuevo usuario al sistema.</p>
             <hr>
         </div>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm border-primary">
-                <div class="card-header bg-primary text-white" style="Background-color: #2d5eaf !important">
-                    <h5 class="mb-0"><i class="fas fa-id-card-alt"></i> Datos del Usuario</h5>
-                </div>
+            <div class="glass-card p-4 border border-primary">
 
-                <div class="card-body">
-                    {{-- Formulario de Registro de Usuario --}}
-                    <form action="{{ route('admin.user.store') }}" method="POST">
-                        @csrf
+                <h5 class="text-black mb-4"><i class="fas fa-address-card me-2" style="margin-right: 5px"></i>Información Personal</h5>
 
-                        {{-- Nombre --}}
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Nombre</label>
-                            <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control" required>
-                        </div>
+                <form action="{{ route('admin.user.store') }}" method="POST">
+                    @csrf
 
-                        {{-- Email --}}
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
-                            <input type="email" value="{{ old('email') }}" name="email" id="email" class="form-control" required>
-                            @error('email')
-                                <div class="alert alert-danger d-flex align-items-center mt-2 p-2 py-1" role="alert">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                    <span class="ms-1" style="margin-left: 10px;">{{ $message }}</span>
-                                </div>
-                            @enderror
-                        </div>
+                    {{-- Nombre --}}
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-semibold text-dark">Nombre Completo</label>
+                        <input type="text" value="{{ old('name') }}" name="name" id="name" class="form-control bg-light bg-opacity-25 text-dark" required>
+                    </div>
 
-                        {{-- Contraseña --}}
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold">Contraseña</label>
-                            <input type="password" name="password" id="password" class="form-control" required>
-                            @if ($errors->has('password'))
-                                <div class="alert alert-danger d-flex align-items-center mt-2 p-2" role="alert">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                    <ul class="mb-0 list-unstyled">
-                                        @foreach ($errors->get('password') as $error)
-                                            <li style="margin-left: 10px;">{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
+                    {{-- Email --}}
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-semibold text-dark">Correo Electrónico</label>
+                        <input type="email" value="{{ old('email') }}" name="email" id="email" class="form-control bg-light bg-opacity-25 text-dark" required>
+                        @error('email')
+                            <div class="alert alert-danger d-flex align-items-center mt-2 p-2 py-1" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i>
+                                <span class="ms-1">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
 
-                        {{-- Confirmar Contraseña --}}
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label fw-semibold">Confirmar Contraseña</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                            @error('password_confirmation')
-                                <div class="alert alert-danger mt-2 p-2 py-1 d-flex align-items-center">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                    <span class="ms-1">{{ $message }}</span>
-                                </div>
-                            @enderror
-                        </div>
+                    {{-- Contraseña --}}
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-semibold text-dark">Contraseña</label>
+                        <input type="password" name="password" id="password" class="form-control bg-light bg-opacity-25 text-dark" required>
+                        @if ($errors->has('password'))
+                            <div class="alert alert-danger d-flex align-items-center mt-2 p-2" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i>
+                                <ul class="mb-0 list-unstyled">
+                                    @foreach ($errors->get('password') as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
 
-                        {{-- Botones --}}
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.user.index') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-1"></i> Volver atrás
-                            </a>
+                    {{-- Confirmar Contraseña --}}
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label fw-semibold text-dark">Confirmar Contraseña</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control bg-light bg-opacity-25 text-dark" required>
+                        @error('password_confirmation')
+                            <div class="alert alert-danger mt-2 p-2 py-1 d-flex align-items-center">
+                                <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i>
+                                <span class="ms-1">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
 
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> Crear Usuario
-                            </button>
-                        </div> 
-                    </form>
-                </div>
+                    {{-- Botones --}}
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ route('admin.user.index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Volver
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Crear Usuario
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('styles')
 <style>
+    .glass-card {
+        background: rgba(3, 105, 217, 0.03);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+    }
+
+    .form-control {
+        background-color: rgba(248, 249, 250, 0.6);
+        border-radius: .375rem;
+        color: #212529;
+    }
+
     .form-control:focus {
         border-color: #5892d0;
         box-shadow: 0 0 0 0.2rem rgba(88, 146, 208, 0.25);
     }
 
-    .card-header {
-        background-color: #dbe1ec;
-        font-weight: bold;
+    .btn-warning {
+        color: #1a1a1a !important;
+        background-color: #ffd151;
+        border-color: #f0ad4e;
+    }
+
+    .btn-outline-secondary {
+        color: #000000 !important;
+        background-color: #ffffff;
+        border-color: #000000;
+    }
+
+    .btn-outline-secondary:hover {
+        color: #ffffff !important;
+        background-color: #555555;
+        border-color: #8c8989;
+    }
+
+    .btn-warning:hover {
+        background-color: #ec971f;
+        border-color: #ec971f;
     }
 
     .alert-danger {

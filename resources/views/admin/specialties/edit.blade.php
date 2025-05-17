@@ -1,79 +1,68 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid">
+
+<div class="container py-4">
     <div class="row justify-content-center mb-4">
-        <div class="col-md-8">
-            <h2 class="text-success" style="color: #589165 !important">
-                <i class="fas fa-user-edit"></i> Editar Especialidad
-            </h2>
-            <p class="text-muted">Modifique los campos necesarios. Los campos marcados con <span class="text-danger">*</span> son obligatorios.</p>
+        <div class="col-md-10 text-left">
+            <h2 class="text-success mb-1"><i class="fas fa-edit me-2" style="margin-right: 5px"></i>Editar Especialidad</h2>
+            <p class="text-secondary mb-0">Modifique los campos necesarios y guarde los cambios.</p>
             <hr>
         </div>
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm border-success">
-                <div class="card-header bg-success text-white" style="background-color: #589165 !important">
-                    <h5 class="mb-0"><i class="fas fa-id-card-alt"></i> Datos de la Especialidad</h5>
-                </div>
+        <div class="col-md-10">
+            <div class="glass-card p-4 border border-success">
 
-                <div class="card-body">
-                    {{-- Formulario de Edición de Especialidad --}}
-                    <form action="{{ route('admin.specialties.update', $specialty->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+                <h5 class="text-black mb-4"><i class="fas fa-id-card-alt me-2" style="margin-right: 5px"></i>Información de la Especialidad</h5>
 
-                        <p class="text-muted small mb-4">Los campos marcados con <span class="text-danger">*</span> son obligatorios.</p>
-                        
-                        {{-- Nombre --}}
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Nombre <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control"  name="name" id="name" value="{{ old('name', $specialty->name) }}" required>
-                        </div>
-                            
-                        {{-- Teléfono --}}
-                        <div class="mb-3">
-                            <label for="phone" class="form-label fw-semibold">Teléfono</label>
-                            <input type="text" class="form-control"  name="phone" id="phone" value="{{ old('phone', $specialty->phone) }}">
-                        </div>
-                   
-                        
-                        {{-- Ubicación --}}
-                        <div class="mb-3">
-                            <label for="location" class="form-label fw-semibold">Ubicación</label>
-                            <input type="text" class="form-control" name="location" id="location" value="{{ old('location', $specialty->location) }}">
+                <form action="{{ route('admin.specialties.update', $specialty->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="name" class="form-label fw-semibold text-dark">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" value="{{ old('name', $specialty->name) }}" name="name" id="name" class="form-control bg-light bg-opacity-25 text-dark" required>
                         </div>
 
-                        {{-- Estado --}} 
-                        <div class="mb-3">
-                            <label for="status" class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
-                            <select name="status" id="status" class="form-control"  required>
-                                <option value="">Seleccione</option>
+                        <div class="col-md-4">
+                            <label for="phone" class="form-label fw-semibold text-dark">Teléfono</label>
+                            <input type="text" value="{{ old('phone', $specialty->phone) }}" name="phone" id="phone" class="form-control bg-light bg-opacity-25 text-dark">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="location" class="form-label fw-semibold text-dark">Ubicación</label>
+                            <input type="text" value="{{ old('location', $specialty->location) }}" name="location" id="location" class="form-control bg-light bg-opacity-25 text-dark">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="status" class="form-label fw-semibold text-dark">Estado <span class="text-danger">*</span></label>
+                            <select name="status" id="status" class="form-control bg-light bg-opacity-25 text-dark" required>
                                 <option value="activa" {{ old('status', $specialty->status) == 'activa' ? 'selected' : '' }}>Activa</option>
                                 <option value="inactiva" {{ old('status', $specialty->status) == 'inactiva' ? 'selected' : '' }}>Inactiva</option>
                             </select>
                         </div>
-                    
-                        {{-- Descripción --}} 
-                        <div class="form-group">
-                            <label for="description" class="form-label fw-semibold">Descripción</label>
-                            <textarea class="form-control"  name="description" id="description" rows="3">{{ old('description', $specialty->description) }}</textarea>
-                        </div>
+                    </div>
 
-                        {{-- Botones --}}
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.specialties.index') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-1"></i> Volver atrás
-                            </a>
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold text-dark">Descripción</label>
+                        <textarea name="description" id="description" class="form-control bg-light bg-opacity-25 text-dark" rows="3">{{ old('description', $specialty->description) }}</textarea>
+                    </div>
 
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save me-1"></i> Actualizar Especialidad
-                            </button>
-                        </div> 
-                    </form>
-                </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ route('admin.specialties.index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Volver atrás
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -83,17 +72,42 @@
 
 @push('styles')
 <style>
+    .glass-card {
+        background: rgba(40, 167, 69, 0.03);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
     .form-control {
-        background-color: #f8f9fa;
-        border-radius: 0.375rem;
-        transition: all 0.2s;
+        background-color: rgba(248, 249, 250, 0.6);
+        border-radius: .375rem;
+        color: #212529;
     }
+
     .form-control:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        border-color: #58b377;
+        box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.25);
     }
-    .card-header h5 {
-        font-weight: 600;
+
+    .btn-outline-secondary {
+        color: #000000 !important;
+        background-color: #ffffff;
+        border-color: #000000;
+    }
+
+    .btn-outline-secondary:hover {
+        color: #ffffff !important;
+        background-color: #555555;
+        border-color: #8c8989;
+    }
+
+    .alert-danger {
+        color: #931824;
+        background-color: #f8d7da;
+        border-color: #d32535;
     }
 </style>
 @endpush

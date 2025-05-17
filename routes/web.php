@@ -8,8 +8,8 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\ConfigurationController;
-
+use App\Http\Controllers\MedicalHistoryController;
+use App\Models\MedicalHistory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -166,6 +166,11 @@ Route::middleware('auth')->group(function () {
         
     Route::put('/doctor/edit-patient/{user_id}', [DoctorController::class, 'updatePatient'])
         ->middleware('can:admin.patients.update')->name('doctor.update.patient');
+
+    // Crear historial médico a partie del listado de citas disponibles
+    Route::get('admin/medical_histories/create/{patient}', [MedicalHistoryController::class, 'createFromAppointment'])
+        ->name('admin.medical_histories.createFromAppointment');
+
 });
 
 
@@ -203,6 +208,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/events', [EventController::class, 'index'])
         ->middleware('can:admin.appointments.index')
         ->name('admin.events.index');
+    
+    // Generar PDF 
+    Route::get('/admin/events/pdf', [EventController::class, 'pdf'])
+        ->middleware('can:admin.user.index')->name('admin.events.pdf');
+
+    // Generar PDF por fechas 
+    Route::get('/admin/events/pdf_dates', [EventController::class, 'pdf_dates'])
+        ->middleware('can:admin.user.index')->name('admin.events.pdf_dates');
+
+
     // Crear cita
     Route::post('/admin/events/create', [EventController::class, 'store'])
         ->middleware('can:admin.appointments.create')
@@ -220,4 +235,32 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/admin/events/check-availability', [EventController::class, 'checkAvailability'])
         ->name('check.availability');
+});
+
+
+############################################################
+##                   ZONA HISTORIAL CLÍNICO               ##
+############################################################
+Route::middleware('auth')->group(function () {
+
+    Route::get('/admin/medical-histories', [MedicalHistoryController::class, 'index'])
+        ->middleware('can:admin.medical_histories.index')->name('admin.medical_histories.index');
+
+    Route::get('/admin/medical-histories/create', [MedicalHistoryController::class, 'create'])
+        ->middleware('can:admin.medical_histories.create')->name('admin.medical_histories.create');
+
+    Route::post('/admin/medical-histories', [MedicalHistoryController::class, 'store'])
+        ->middleware('can:admin.medical_histories.store')->name('admin.medical_histories.store');
+
+    Route::get('/admin/medical-histories/{medicalHistory}', [MedicalHistoryController::class, 'show'])
+        ->middleware('can:admin.medical_histories.show')->name('admin.medical_histories.show');
+
+    Route::get('/admin/medical-histories/{medicalHistory}/edit', [MedicalHistoryController::class, 'edit'])
+        ->middleware('can:admin.medical_histories.edit')->name('admin.medical_histories.edit');
+
+    Route::put('/admin/medical-histories/{medicalHistory}', [MedicalHistoryController::class, 'update'])
+        ->middleware('can:admin.medical_histories.update')->name('admin.medical_histories.update');
+
+    Route::delete('/admin/medical-histories/{medicalHistory}', [MedicalHistoryController::class, 'destroy'])
+        ->middleware('can:admin.medical_histories.destroy')->name('admin.medical_histories.destroy');
 });

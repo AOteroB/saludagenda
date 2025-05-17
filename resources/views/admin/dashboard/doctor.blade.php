@@ -1,70 +1,123 @@
-<div class="row">
-    <div class="col-lg-3 col-3">
-        <div class="small-box bg-white shadow-sm border border-primary rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalPatients }}</h3>
-                    <p class="text-muted mb-0">Pacientes Registrados</p>
-                </div>
-                <div class="text-primary" style="font-size: 32px; opacity: 0.75;">
-                    <i class="fas fa-user-injured"></i>
-                </div>
-            </div>
-            <a href="{{ route('admin.patients.index') }}" class="small-box-footer">
-                Más Información <i class="fas fa-arrow-circle-right"></i>
-            </a>
+<style>
+    .btn-outline-secondary{
+        color: #000;
+    }
+
+    .btn-outline-secondary:hover{
+        color: #ffffff;
+        background-color: #000;
+    }
+
+    @media (max-width: 576px) {
+        .stat-value {
+            font-size: 24px;
+        }
+        .card-body h5 {
+            font-size: 1rem;
+        }
+        .icon-responsive {
+            font-size: 1rem;
+        }
+    }
+
+    @media (min-width: 577px) {
+        .stat-value {
+            font-size: 32px;
+        }
+        .card-body h5 {
+            font-size: 1.25rem;
+        }
+        .icon-responsive {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="text-secondary"><i class="fas fa-tachometer-alt"></i> Panel Principal</h2>
+            <p class="text-muted mb-3">Resumen de las entidades y estadísticas del sistema.</p>
+            <hr>
         </div>
     </div>
 
-    <div class="col-lg-3 col-3">
-        <div class="small-box bg-white shadow-sm border border-success rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalEvents}}</h3>
-                    <p class="text-dark mb-0">Citas Asignadas</p>
-                </div>
-                <div class="text-success" style="font-size: 32px; opacity: 0.75;">
-                    <i class="bi bi-calendar-check"></i>
+    <div class="row">
+        <!-- Pacientes Registrados -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-primary border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="fas fa-procedures mr-2 text-primary icon-responsive"></i> Pacientes Atendidos en el Sistema
+                    </h5>
+                    <p class="text-muted mb-2">Pacientes registrados que han sido atendidos.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalPatients }}</h3>
+                        <a href="{{ route('admin.patients.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <a href="" class="small-box-footer">
-                Ver Agenda <i class="fas fa-arrow-circle-right"></i>
-            </a>
         </div>
-    </div>
 
-    <div class="col-lg-3 col-3">
-        <div class="small-box bg-white shadow-sm border border-danger rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalSpecialties }}</h3>
-                    <p class="text-muted mb-0">Especialidades</p>
-                </div>
-                <div class="text-danger" style="font-size: 32px; opacity: 0.75;">
-                    <i class="bi bi-heart-pulse"></i>
+        <!-- Áreas Médicas -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-info border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-heart-pulse mr-2 text-info icon-responsive"></i> Áreas Médicas Disponibles
+                    </h5>
+                    <p class="text-muted mb-2">Especialidades médicas que ofrece el sistema.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalSpecialties }}</h3>
+                        <a href="{{ route('admin.specialties.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <a href="{{ route('admin.specialties.index') }}" class="small-box-footer">
-                Ver Especialidades <i class="fas fa-arrow-circle-right"></i>
-            </a>
         </div>
-    </div>
 
-        <div class="col-lg-3 col-3">
-        <div class="small-box bg-white shadow-sm border border-secondary rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1"> - </h3>
-                    <p class="text-muted mb-0">Horarios de Atención</p>
-                </div>
-                <div class="text-secondary" style="font-size: 32px; opacity: 0.75;">
-                <i class="bi bi-clock-history"></i>
-
+            <!-- Citas Programadas -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-danger border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-calendar-check mr-2 text-danger icon-responsive"></i> Citas Médicas Programadas
+                    </h5>
+                    <p class="text-muted mb-2">Próximas consultas agendadas por los usuarios.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalEvents }}</h3>
+                        <a href="{{ route('admin.events.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <a href="{{ route('admin.schedules.index') }}" class="small-box-footer">
-                Ver Horarios <i class="fas fa-arrow-circle-right"></i>
-            </a>
+        </div>
+
+        <!-- Horarios Disponibles -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-secondary border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-clock-history mr-2 text-secondary icon-responsive"></i> Horarios de Atención
+                    </h5>
+                    <p class="text-muted mb-2">Listado de horarios que ofrece el sistema.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalSpecialties }}</h3>
+                        <a href="{{ route('admin.schedules.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -124,7 +177,9 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('doctor.edit.patient', ['user_id' => $event->user->id]) }}" 
-                                    class="btn btn-primary">Editar</a>
+                                        class="btn btn-sm btn-primary mb-1">
+                                        Editar
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

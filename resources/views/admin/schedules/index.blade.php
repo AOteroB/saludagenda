@@ -6,7 +6,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <h2 class="text-primary" style="color: #2d5eaf !important">
-                <i class="bi bi-calendar"></i> Gestión de Horarios
+                <i class="bi bi-calendar-check"></i> Gestión de Horarios
             </h2>
             <p class="text-muted">Consulta, administra y exporta los horarios de los doctores registrados en el sistema.</p>
             <hr>
@@ -105,20 +105,6 @@
                       previous: "Anterior"
                     }
                   },
-                  buttons: [
-                    {
-                      extend: 'collection',
-                      text: 'Exportar Datos',
-                      orientation: 'landscape',
-                      buttons: [
-                        { extend: 'copy', text: 'Copiar' },
-                        { extend: 'pdf' },
-                        { extend: 'csv' },
-                        { extend: 'excel' },
-                        { extend: 'print', text: 'Imprimir' }
-                      ]
-                    },
-                  ]
                 })
                 .buttons()
                 .container()

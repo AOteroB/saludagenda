@@ -66,6 +66,15 @@
             font-size: 0.9rem;
             margin-top: 1rem;
         }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-header .nav-link{
+            height:0%;
+        }
     </style>
 </head>
 
@@ -76,30 +85,84 @@
     <div class="wrapper">
 
         <!-- Barra de navegación superior -->
-        <nav class="main-header navbar navbar-expand" style="background:#193c5f; color: white;">
+        <nav class="main-header navbar navbar-expand">
             <!-- Menú lateral izquierda -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="color: black !important">
                 <li class="nav-item">
                     <!-- Botón para expandir/colapsar el menú lateral -->
-                    <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button">
+                    <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button" style="color: black !important">
                         <i class="fas fa-bars"></i>
                     </a>
                 </li>
                 <!-- Enlace al panel principal -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('admin.index') }}" class="nav-link text-white font-weight-bold">
+                    <a href="{{ route('admin.index') }}" class="nav-link text-white font-weight-bold" style="color: black !important">
                         <i class="fas fa-heartbeat text-danger mr-1"></i>Sistema de Gestión Médica
                     </a>
                 </li>
             </ul>
 
             <!-- Información del usuario (parte derecha del navbar) -->
+            @php
+                // Obtenemos el usuario autenticado
+                $user = Auth::user();
+
+                // Obtenemos el nombre "crudo" del primer rol del usuario
+                $rolRaw = $user->roles->pluck('name')->first();
+
+                // Diccionario para traducir los nombres de rol a su forma legible
+                $rolesTraducidos = [
+                    'admin' => 'Administrador',
+                    'patient' => 'Paciente',
+                    'doctor' => 'Doctor',
+                ];
+
+                // Usamos la traducción si existe, o capitalizamos la primera letra si no está en el diccionario
+                $rol = $rolesTraducidos[$rolRaw] ?? ucfirst($rolRaw);
+
+                // Inicializamos variable para el nombre completo
+                $nombreCompleto = '';
+
+                // Si el rol es 'doctor' y tiene relación con el modelo Doctor, formateamos con "Dr." delante
+                if ($rolRaw === 'doctor' && $user->doctor) {
+                    $nombreCompleto = 'Dr. ' . $user->doctor->name . ' ' . $user->doctor->last_name;
+
+                // Si el rol es 'patient' y tiene relación con el modelo Paciente
+                } elseif ($rolRaw === 'patient' && $user->paciente) {
+                    $nombreCompleto = $user->paciente->nombre . ' ' . $user->paciente->apellido;
+
+                // En caso de que no tenga relaciones, usamos el nombre del usuario como fallback
+                } else {
+                    $nombreCompleto = $user->name;
+                }
+            @endphp
+
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white">{{ Auth::user()->name }}</a>
+                <!-- Texto de bienvenida con nombre completo y rol -->
+                <li class="nav-item d-flex align-items-center">
+                    Bienvenido, {{ $nombreCompleto }} - {{ $rol }}
                 </li>
-                <li class="nav-item">
-                    <img src="{{ url('dist/img/user2-160x160.jpg') }}" class="img-circle nav-link" alt="Imagen de Usuario" style="height: 35px;">
+
+                <!-- Icono de usuario con menú desplegable -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Icono de perfil de usuario -->
+                        <i class="fas fa-user-circle fa-2x"></i>
+                    </a>
+
+                    <!-- Menú desplegable (dropdown) -->
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <!-- Opción para cerrar sesión -->
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Cerrar sesión
+                        </a>
+
+                        <!-- Formulario oculto que se dispara al hacer clic en "Cerrar sesión" -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -115,15 +178,6 @@
 
             <!-- Panel lateral con datos del usuario -->
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center border-bottom border-secondary">
-                    <div class="info ms-2">
-                        <a href="#" class="d-block text-white fw-semibold">
-                            {{ Auth::user()->name }} - 
-                            {{ Auth::user()->roles->pluck('name')->first() }} <!-- Muestra el rol del usuario -->
-                        </a>
-                    </div>
-                </div>
-
                 <!-- Menú de navegación lateral -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -271,8 +325,15 @@
 
                         <li class="nav-item has-treeview">
                             <a href="{{ route('admin.reports.index') }}" class="nav-link text-white">
+                                <i class="fas fa-file-pdf nav-icon text-white"></i>
+                                <p>Listados PDF</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="{{ route('admin.medical_histories.index') }}" class="nav-link text-white">
                                 <i class="fas fa-file-medical-alt nav-icon text-white"></i>
-                                <p>Listados PDF<i class="right fas fa-angle-left"></i></p>
+                                <p>Historial Médico</i></p>
                             </a>
                         </li>
 
@@ -327,25 +388,19 @@
         @endif
 
         <!-- Contenedor principal del contenido -->
-        <div class="content-wrapper" style="background-color: #f4f7fc">
+        <div class="content-wrapper">
             
              <!-- Encabezado de contenido (Título y breadcrumb) -->
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-
-                        <!-- Título dinámico de la vista actual -->
-                        <div class="col-sm-6">
-                            <h4 class="font-weight-light text-dark m-0">{{ $vistaActual }}</h4>
-                        </div><!-- /.col -->
-
-                        <!-- Breadcrumb (navegación secundaria) -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Inicio</a></li>
-                                <li class="breadcrumb-item active">{{ $vistaActual }}</li>
-                            </ol>
-                        </div><!-- /.col -->
+                    <!-- Breadcrumb (navegación secundaria) -->
+                    <div class="col-sm-12" style="text-align: right">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Inicio</a></li>
+                            <li class="breadcrumb-item active">{{ $vistaActual }}</li>
+                        </ol>
+                    </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div><!-- /.content-header -->
