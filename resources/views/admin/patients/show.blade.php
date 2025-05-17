@@ -145,6 +145,11 @@
         border-color: #ec971f;
     }
 
+    .btn-info{
+        background-color: #0dcaf0;
+        color: white;
+    }
+    
     .btn-outline-secondary {
         color: #000000 !important;
         background-color: #ffffff;

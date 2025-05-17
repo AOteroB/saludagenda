@@ -156,6 +156,13 @@
         color: white;
     }
 
+    .btn-light:hover {
+        background-color: #488BDA; 
+        color: white !important;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 5px 10px 10px rgba(255, 255, 255, 0.3);
+    }
+
     .badge {
         padding: 0.45em 0.6em;
         font-size: 0.8em;

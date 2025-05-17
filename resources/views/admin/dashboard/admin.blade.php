@@ -1,12 +1,16 @@
 <style>
-    .btn-outline-secondary{
-        color: #000;
-    }
+.btn-outline-secondary {
+    color: #ffffff;
+    background: linear-gradient(135deg, #4a90e2, #193c5f);
+    transition: all 0.3s ease;
+}
 
-    .btn-outline-secondary:hover{
-        color: #ffffff;
-        background-color: #000;
-    }
+.btn-outline-secondary:hover {
+    background: linear-gradient(135deg, #5aa9ff, #1a4673);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
 
     @media (max-width: 576px) {
         .stat-value {

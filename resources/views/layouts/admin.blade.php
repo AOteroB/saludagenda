@@ -68,7 +68,7 @@
 
         /* Glassmorphism Sidebar */
         .glass-sidebar {
-            background: rgba(25, 60, 95, 0.7);
+            background: rgba(25, 60, 95, 0.9);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -143,8 +143,7 @@
         /* Logo style */
         .glass-logo {
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 15px;
+            padding: 1px 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             color: #e3efff;
             transition: background 0.3s ease;
@@ -175,7 +174,7 @@
                 </li>
                 <!-- Enlace al panel principal -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('admin.index') }}" class="nav-link text-white font-weight-bold" style="color: black !important">
+                    <a href="{{ route('admin.index') }}" class="nav-link" style="color: black !important">
                         <i class="fas fa-heartbeat text-danger mr-1"></i>Sistema de Gestión Médica
                     </a>
                 </li>
@@ -218,7 +217,7 @@
 
             <ul class="navbar-nav ml-auto">
                 <!-- Texto de bienvenida con nombre completo y rol -->
-                <li class="nav-item d-flex align-items-center">
+                <li class="nav-item d-flex align-items-center" style="font-style: italic;">
                     Bienvenido, {{ $nombreCompleto }} - {{ $rol }}
                 </li>
 
@@ -248,7 +247,7 @@
         <!-- Fin del navbar -->
 
         <!-- Contenedor lateral (sidebar) -->
-        <aside class="main-sidebar glass-sidebar elevation-4">
+        <aside class="main-sidebar glass-sidebar elevation-4" style="padding-top: 0px">
             <!-- Logo de la marca -->
             <a href="{{ route('admin.index') }}" class="brand-link d-flex align-items-center glass-logo">
                 <img src="{{ url('dist/img/Logo.png') }}" alt="Logo" style="width: 65px; height: 65px;">

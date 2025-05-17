@@ -139,6 +139,11 @@
         border-color: #ec971f;
     }
 
+    .btn-info{
+        background-color: #0dcaf0;
+        color: white;
+    }
+
     .badge {
         font-size: 0.85rem;
         padding: 0.35em 0.65em;

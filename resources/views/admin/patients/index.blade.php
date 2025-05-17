@@ -121,13 +121,23 @@
     }
 
     .btn-light {
-    color: #193c5f !important; 
+        color: #193c5f !important; 
     }
 
     .btn-light:hover {
-    background-color: #60768F; 
-    color: white !important;
-    transform: translateY(-5px) scale(1.05);
+        background-color: #488BDA; 
+        color: white !important;
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 3px 10px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline-info {
+        color: #0dcaf0;
+        border-color: #0dcaf0;
+    }
+    .btn-outline-info:hover {
+        background-color: #0dcaf0;
+        color: white;
     }
 
     .table-hover tbody tr:hover {
