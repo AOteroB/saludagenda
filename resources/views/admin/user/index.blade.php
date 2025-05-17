@@ -112,11 +112,11 @@
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(0, 0, 0, 0.1);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden; /* Para que el header respete los bordes redondeados */
+        overflow: hidden; 
     }
 
     .glass-card-header {
-        background: rgba(0, 0, 0, 0.7); 
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
     }

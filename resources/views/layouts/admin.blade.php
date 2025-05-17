@@ -51,16 +51,6 @@
 
     <!-- Estilos personalizados del menú lateral -->
     <style>
-        .nav-sidebar .nav-link:hover {
-            background: rgba(222, 225, 227, 0.3);
-            border-radius: 0.25rem;
-        }
-
-        .nav-sidebar .nav-link.active {
-            background-color: #6a7c97 !important;
-            color: white !important;
-        }
-
         .nav-header {
             font-weight: bold;
             font-size: 0.9rem;
@@ -75,6 +65,95 @@
         .main-header .nav-link{
             height:0%;
         }
+
+        /* Glassmorphism Sidebar */
+        .glass-sidebar {
+            background: rgba(25, 60, 95, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            color: #f0f4f8;
+            padding: 1rem 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .glass-sidebar .nav-link {
+            color: #e8e8e8;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .glass-sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            box-shadow: 0 0 8px #9fc5e8;
+        }
+
+        .glass-sidebar .nav-link.active {
+            background: linear-gradient(135deg, #4a90e2, #193c5f);
+            color: #fff;
+            box-shadow: 0 0 10px #3b7ddd;
+        }
+
+        .glass-sidebar .nav-link .nav-icon {
+            color: #a9bcd0;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .glass-sidebar .nav-link:hover .nav-icon,
+        .glass-sidebar .nav-link.active .nav-icon {
+            color: #ffffff;
+        }
+
+        .glass-sidebar .nav-header {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #9bb8d9;
+            padding-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* Submenu treeview */
+        .nav-treeview {
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .menu-open > .nav-treeview {
+            max-height: 500px; /* suficiente para mostrar */
+            opacity: 1;
+        }
+
+        .nav-treeview > .nav-item > .nav-link {
+            padding-left: 25px;
+            font-size: 0.9rem;
+            color: #cedcf0;
+        }
+
+        .nav-treeview > .nav-item > .nav-link:hover,
+        .nav-treeview > .nav-item > .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        /* Logo style */
+        .glass-logo {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: #e3efff;
+            transition: background 0.3s ease;
+        }
+
+        .glass-logo:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
     </style>
 </head>
 
@@ -169,11 +248,11 @@
         <!-- Fin del navbar -->
 
         <!-- Contenedor lateral (sidebar) -->
-        <aside class="main-sidebar elevation-4" style="background: #193c5f; color: white;">
+        <aside class="main-sidebar glass-sidebar elevation-4">
             <!-- Logo de la marca -->
-            <a href="{{ route('admin.index') }}" class="brand-link d-flex align-items-center">
-                <img src="{{ url('dist/img/Logo.png') }}" class="img-circle elevation-2" alt="Logo" style="width: 65px; height: 65px; margin-right:5px">
-                <span class="brand-text fw-bold text-white"> SALUD AGENDA</span>
+            <a href="{{ route('admin.index') }}" class="brand-link d-flex align-items-center glass-logo">
+                <img src="{{ url('dist/img/Logo.png') }}" alt="Logo" style="width: 65px; height: 65px;">
+                <span class="brand-text fw-bold">SALUD AGENDA</span>
             </a>
 
             <!-- Panel lateral con datos del usuario -->
@@ -182,7 +261,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                        <li class="nav-header text-white">NAVEGACIÓN</li>
+                        <li class="nav-header glass-header">NAVEGACIÓN</li>
 
                         <li class="nav-item">
                             <a href="{{ route('admin.index') }}" class="nav-link {{ request()->routeIs('admin.index') ? 'active' : '' }} text-white">
@@ -192,7 +271,7 @@
                         </li>
 
                         @can('admin.user.index')
-                            <li class="nav-header text-white">GESTIÓN DE ACCESO</li>
+                            <li class="nav-header glass-header">GESTIÓN DE ACCESO</li>
 
                             <li class="nav-item has-treeview {{ request()->is('admin/user*') ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }} text-white">
@@ -201,29 +280,22 @@
                                 </a>
                                 <ul class="nav nav-treeview ml-3">
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.user.index') }}" class="nav-link {{ request()->routeIs('admin.user.index') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-list-alt nav-icon text-white"></i>
+                                        <a href="{{ route('admin.user.index') }}" class="nav-link {{ request()->routeIs('admin.user.index') ? 'active' : '' }}">
+                                            <i class="fas fa-list-alt nav-icon"></i>
                                             <p>Listado</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.user.create') }}" class="nav-link {{ request()->routeIs('admin.user.create') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-user-plus nav-icon text-white"></i>
+                                        <a href="{{ route('admin.user.create') }}" class="nav-link {{ request()->routeIs('admin.user.create') ? 'active' : '' }}">
+                                            <i class="fas fa-user-plus nav-icon"></i>
                                             <p>Crear Nuevo</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-
-                            <li class="nav-item">
-                                <a href="" class="nav-link text-white">
-                                    <i class="nav-icon fas fa-user-shield text-white"></i>
-                                    <p>Roles y Permisos</p>
-                                </a>
-                            </li>
                         @endcan
 
-                        <li class="nav-header text-white">MÓDULOS MÉDICOS</li>
+                        <li class="nav-header glass-header">MÓDULOS MÉDICOS</li>
 
                         <li class="nav-item has-treeview {{ request()->is('admin/specialties*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->is('admin/specialties*') ? 'active' : '' }} text-white">
@@ -232,15 +304,15 @@
                             </a>
                             <ul class="nav nav-treeview ml-3">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.specialties.index') }}" class="nav-link {{ request()->routeIs('admin.specialties.index') ? 'active' : '' }} text-white">
-                                        <i class="fas fa-list-alt nav-icon text-white"></i>
+                                    <a href="{{ route('admin.specialties.index') }}" class="nav-link {{ request()->routeIs('admin.specialties.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list-alt nav-icon"></i>
                                         <p>Listado</p>
                                     </a>
                                 </li>
                                 @can('admin.specialties.create')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.specialties.create') }}" class="nav-link {{ request()->routeIs('admin.specialties.create') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-plus-square nav-icon text-white"></i>
+                                        <a href="{{ route('admin.specialties.create') }}" class="nav-link {{ request()->routeIs('admin.specialties.create') ? 'active' : '' }}">
+                                            <i class="fas fa-plus-square nav-icon"></i>
                                             <p>Crear Nueva</p>
                                         </a>
                                     </li>
@@ -255,15 +327,15 @@
                             </a>
                             <ul class="nav nav-treeview ml-3">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.doctors.index') }}" class="nav-link {{ request()->routeIs('admin.doctors.index') ? 'active' : '' }} text-white">
-                                        <i class="fas fa-list-alt nav-icon text-white"></i>
+                                    <a href="{{ route('admin.doctors.index') }}" class="nav-link {{ request()->routeIs('admin.doctors.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list-alt nav-icon"></i>
                                         <p>Listado</p>
                                     </a>
                                 </li>
                                 @can('admin.doctors.create')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.doctors.create') }}" class="nav-link {{ request()->routeIs('admin.doctors.create') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-user-plus nav-icon text-white"></i>
+                                        <a href="{{ route('admin.doctors.create') }}" class="nav-link {{ request()->routeIs('admin.doctors.create') ? 'active' : '' }}">
+                                            <i class="fas fa-user-plus nav-icon"></i>
                                             <p>Crear Nuevo</p>
                                         </a>
                                     </li>
@@ -279,15 +351,15 @@
                                 </a>
                                 <ul class="nav nav-treeview ml-3">
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.patients.index') }}" class="nav-link {{ request()->routeIs('admin.patients.index') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-list-alt nav-icon text-white"></i>
+                                        <a href="{{ route('admin.patients.index') }}" class="nav-link {{ request()->routeIs('admin.patients.index') ? 'active' : '' }}">
+                                            <i class="fas fa-list-alt nav-icon"></i>
                                             <p>Listado</p>
                                         </a>
                                     </li>
                                     @can('admin.patients.create')
                                         <li class="nav-item">
-                                            <a href="{{ route('admin.patients.create') }}" class="nav-link {{ request()->routeIs('admin.patients.create') ? 'active' : '' }} text-white">
-                                                <i class="fas fa-user-plus nav-icon text-white"></i>
+                                            <a href="{{ route('admin.patients.create') }}" class="nav-link {{ request()->routeIs('admin.patients.create') ? 'active' : '' }}">
+                                                <i class="fas fa-user-plus nav-icon"></i>
                                                 <p>Crear Nuevo</p>
                                             </a>
                                         </li>
@@ -296,7 +368,7 @@
                             </li>
                         @endcan
 
-                        <li class="nav-header text-white">CITAS MÉDICAS</li>
+                        <li class="nav-header glass-header">CITAS MÉDICAS</li>
 
                         <li class="nav-item has-treeview {{ request()->is('admin/schedules*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->is('admin/schedules*') ? 'active' : '' }} text-white">
@@ -305,15 +377,15 @@
                             </a>
                             <ul class="nav nav-treeview ml-3">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.schedules.index') }}" class="nav-link {{ request()->routeIs('admin.schedules.index') ? 'active' : '' }} text-white">
-                                        <i class="fas fa-calendar-alt nav-icon text-white"></i>
+                                    <a href="{{ route('admin.schedules.index') }}" class="nav-link {{ request()->routeIs('admin.schedules.index') ? 'active' : '' }}">
+                                        <i class="fas fa-calendar-alt nav-icon"></i>
                                         <p>Listado</p>
                                     </a>
                                 </li>
                                 @can('admin.schedules.create')
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.schedules.create') }}" class="nav-link {{ request()->routeIs('admin.schedules.create') ? 'active' : '' }} text-white">
-                                            <i class="fas fa-plus-circle nav-icon text-white"></i>
+                                        <a href="{{ route('admin.schedules.create') }}" class="nav-link {{ request()->routeIs('admin.schedules.create') ? 'active' : '' }}">
+                                            <i class="fas fa-plus-circle nav-icon"></i>
                                             <p>Crear Nuevo</p>
                                         </a>
                                     </li>
@@ -321,7 +393,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-header text-white">INFORMES</li>
+                        <li class="nav-header glass-header">INFORMES</li>
 
                         <li class="nav-item has-treeview">
                             <a href="{{ route('admin.reports.index') }}" class="nav-link text-white">
@@ -338,7 +410,7 @@
                         </li>
 
                         <!-- Sección: Cuenta -->
-                        <li class="nav-header text-white">CUENTA</li>
+                        <li class="nav-header glass-header">CUENTA</li>
         
                         <li class="nav-item">
                             <a href=""

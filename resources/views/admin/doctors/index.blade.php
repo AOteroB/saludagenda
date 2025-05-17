@@ -118,7 +118,7 @@
     }
 
     .glass-card-header {
-        background: rgba(0, 0, 0, 0.7);
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
     }

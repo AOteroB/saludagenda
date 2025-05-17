@@ -12,7 +12,7 @@
 
     <div class="glass-card mb-4 border border-dark">
         <div class="glass-card-header p-3 text-white">
-            <div class="d-flex justify-content-between align-items-center" style="margin: 10px">
+            <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
                 <h5 class="mb-0">Listado de Pacientes Registrados</h5>
                 <a href="{{ route('admin.patients.create') }}" class="btn btn-sm btn-light">
                     <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
@@ -102,7 +102,7 @@
     }
 
     .glass-card-header {
-        background: rgba(0, 0, 0, 0.7);
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
     }
@@ -118,6 +118,16 @@
         font-size: 0.8em;
         font-weight: 500;
         border-radius: 0.5rem;
+    }
+
+    .btn-light {
+    color: #193c5f !important; 
+    }
+
+    .btn-light:hover {
+    background-color: #60768F; 
+    color: white !important;
+    transform: translateY(-5px) scale(1.05);
     }
 
     .table-hover tbody tr:hover {

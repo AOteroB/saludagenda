@@ -103,7 +103,7 @@
     }
 
     .glass-card-header {
-        background: rgba(0, 0, 0, 0.7); 
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
     }
@@ -129,6 +129,16 @@
     .badge-danger {
         background-color: #dc3545;
         color: white;
+    }
+
+    .btn-light {
+        color: #193c5f !important; 
+    }
+
+    .btn-light:hover {
+    background-color: #60768F; 
+    color: white !important;
+    transform: translateY(-5px) scale(1.05);
     }
 
     .btn-outline-info:hover, 
