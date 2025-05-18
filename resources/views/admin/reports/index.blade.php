@@ -134,6 +134,26 @@
         });
     });
 </script>
-
-
 @endsection
+
+@push('styles')
+    <style>
+        .btn-dark {
+            background: linear-gradient(135deg, #000000, #888888);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary{
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(99, 99, 99, 0.2));
+            border: 1px solid #ccc;
+            backdrop-filter: blur(5px);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover, .btn-dark:hover {
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+@endpush
