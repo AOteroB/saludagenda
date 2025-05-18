@@ -1,91 +1,101 @@
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="text-black"><i class="fas fa-tachometer-alt"></i> Panel Principal</h2>
+            <p class="text-muted mb-3">Resumen de las entidades y estadísticas del sistema.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <!-- Mostrar SweetAlert si existe un mensaje de éxito en la sesión -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2500 
+                }).then(() => {
+                    // Redirige automáticamente después de que el mensaje se cierre
+                    window.location.href = '{{ url('/admin') }}';
+                });
+            </script>
+        @endif
+
+        <div class="col-lg-3 col-6">
+            <div class="small-glass-card border-success">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h3>{{ $totalEvents }}</h3>
+                        <p>Mis próximas citas</p>
+                    </div>
+                    <div class="text-success icon-large">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                </div>
+                <a href="{{ route('admin.events.show', ['id' => Auth::user()->id]) }}" class="small-box-footer">
+                    Ver Citas <i class="fas fa-arrow-circle-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-glass-card border-primary">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h3>{{ $totalDoctors }}</h3>
+                        <p>Doctores Disponibles</p>
+                    </div>
+                    <div class="text-primary icon-large">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                </div>
+                <a href="{{ route('admin.doctors.index') }}" class="small-box-footer">
+                    Ver Doctores <i class="fas fa-arrow-circle-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-glass-card border-danger">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h3>{{ $totalSpecialties }}</h3>
+                        <p>Especialidades</p>
+                    </div>
+                    <div class="text-danger icon-large">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+                </div>
+                <a href="{{ route('admin.specialties.index') }}" class="small-box-footer">
+                    Ver Especialidades <i class="fas fa-arrow-circle-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-glass-card border-secondary">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h3>-</h3>
+                        <p>Horarios de Atención</p>
+                    </div>
+                    <div class="text-secondary icon-large">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                </div>
+                <a href="{{ route('admin.schedules.index') }}" class="small-box-footer">
+                    Ver Horarios <i class="fas fa-arrow-circle-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
 <div class="row">
-
-    <!-- Mostrar SweetAlert si existe un mensaje de éxito en la sesión -->
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 2500 
-            }).then(() => {
-                // Redirige automáticamente después de que el mensaje se cierre
-                window.location.href = '{{ url('/admin') }}';
-            });
-        </script>
-    @endif
-
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-white shadow-sm border border-success rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalEvents }}</h3>
-                    <p class="text-muted mb-0">Mis próximas citas</p>
-                </div>
-                <div class="text-success" style="font-size: 32px; opacity: 0.75;">
-                    <i class="bi bi-calendar-check"></i>
-                </div>
-            </div>
-            <a href="{{ route('admin.events.show', ['id' => Auth::user()->id]) }}" class="small-box-footer">
-                Ver Citas <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-white shadow-sm border border-primary rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalDoctors }}</h3>
-                    <p class="text-muted mb-0">Doctores Disponibles</p>
-                </div>
-                <div class="text-primary" style="font-size: 32px; opacity: 0.75;">
-                    <i class="fas fa-user-md"></i>
-                </div>
-            </div>
-            <a href="{{ route('admin.doctors.index') }}" class="small-box-footer">
-                Ver Doctores <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-white shadow-sm border border-danger rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1">{{ $totalSpecialties }}</h3>
-                    <p class="text-muted mb-0">Especialidades</p>
-                </div>
-                <div class="text-danger" style="font-size: 32px; opacity: 0.75;">
-                    <i class="bi bi-heart-pulse"></i>
-                </div>
-            </div>
-            <a href="{{ route('admin.specialties.index') }}" class="small-box-footer">
-                Ver Especialidades <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-white shadow-sm border border-secondary rounded-2 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h3 class="text-dark mb-1"> - </h3>
-                    <p class="text-muted mb-0">Horarios de Atención</p>
-                </div>
-                <div class="text-secondary" style="font-size: 32px; opacity: 0.75;">
-                <i class="bi bi-clock-history"></i>
-
-                </div>
-            </div>
-            <a href="{{ route('admin.schedules.index') }}" class="small-box-footer">
-                Ver Horarios <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
 
     <div class="col-md-12">
         <div class="card card-outline card-primary">
@@ -180,6 +190,7 @@
                         </div>
                     </form>
                 </div>
+                <br>
                 <div id='calendar'></div>
             </div>
         </div>
@@ -369,4 +380,69 @@ document.addEventListener('DOMContentLoaded', function() {
     .small-box>.small-box-footer {
         background-color: rgb(99 145 255 / 10%);
     }
+
+    .small-glass-card {
+    background: rgba(252, 252, 252, 0.6);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    padding: 1rem 1.5rem;
+}
+
+.border-success {
+    border-top: 4px solid #28a745 !important; /* verde */
+}
+
+.border-primary {
+    border-top: 4px solid #007bff !important; /* azul */
+}
+
+.border-danger {
+    border-top: 4px solid #dc3545 !important; /* rojo */
+}
+
+.border-secondary {
+    border-top: 4px solid #6c757d !important; /* gris */
+}
+
+.small-glass-card h3 {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.8rem;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.small-glass-card p {
+    color: #6c757d;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Link button similar */
+.small-glass-card a.small-box-footer {
+    color: #ffffff;
+    background: linear-gradient(135deg, #4a90e2, #193c5f);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.small-glass-card a.small-box-footer:hover {
+    background: linear-gradient(135deg, #5aa9ff, #1a4673);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.small-glass-card .icon-large {
+    font-size: 2rem;
+    opacity: 0.75;
+}
+
 </style>

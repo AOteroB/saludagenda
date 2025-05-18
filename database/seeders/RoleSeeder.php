@@ -20,9 +20,6 @@ class RoleSeeder extends Seeder
         $doctor = Role::firstOrCreate(['name' => 'doctor']);
         $patient = Role::firstOrCreate(['name' => 'patient']);
 
-       
-
-        
         // Crear permisos
         $permissions = [
             // Admin: tendrá todos los permisos
@@ -61,14 +58,21 @@ class RoleSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Asignar todos los permisos al admin
-        $adminPermissions = Permission::all();
+        // Asignar todos los permisos al admin salvo crear y editar historiales médicos
+        $adminPermissions = Permission::whereNotIn('name', [
+            'admin.medical_histories.create',
+            'admin.medical_histories.store',
+            'admin.medical_histories.edit',
+            'admin.medical_histories.update',
+        ])->get();
+
         $admin->syncPermissions($adminPermissions);
 
         // Permisos para el doctor
         $doctorPermissions = Permission::whereIn('name', [
             'admin.index',
             'admin.patients.index', 'admin.patients.show', 'admin.patients.edit', 'admin.patients.update',
+            'admin.doctors.index',
             'admin.specialties.index', 'admin.specialties.show', 'admin.schedules.index', 'admin.schedules.show',
             'admin.appointments.index', 'admin.appointments.show',
             'admin.medical_histories.index', 'admin.medical_histories.create', 'admin.medical_histories.store', 
@@ -79,11 +83,12 @@ class RoleSeeder extends Seeder
 
         // Permisos para el paciente
         $patientPermissions = Permission::whereIn('name', [
-            'admin.index','admin.doctors.index', 
+            'admin.index',
+            'admin.doctors.index', 
             'admin.specialties.index','admin.specialties.show', 
             'admin.schedules.index', 'admin.schedules.show',
             'admin.appointments.create', 'admin.appointments.show', 'admin.appointments.destroy',
-            'admin.medical_histories.show'
+            'admin.medical_histories.index', 'admin.medical_histories.show'
             ])->get();
         $patient->syncPermissions($patientPermissions);
     }

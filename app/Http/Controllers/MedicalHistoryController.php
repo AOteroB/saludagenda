@@ -17,9 +17,25 @@ class MedicalHistoryController extends Controller
     public function index()
     {
         $vistaActual = "Historiales Clínicos";
-        $histories = MedicalHistory::with('patient', 'doctor')->get();
+        $user = Auth::user();
+
+        if ((auth()->user()->hasRole('doctor'))) {
+            // Todos los historiales
+            $histories = MedicalHistory::with('patient', 'doctor')->get();
+        } elseif ((auth()->user()->hasRole('patient'))) {
+            // Solo los historiales del paciente logueado
+            $patient = $user->patient;
+            $histories = MedicalHistory::with('doctor')->where('patient_id', $patient->id)->get();
+        } elseif ((auth()->user()->hasRole('admin'))) {
+            // Admin ve todos
+            $histories = MedicalHistory::with('patient', 'doctor')->get();
+        } else {
+            abort(403);
+        }
+        
         return view('admin.medical_histories.index', compact('histories', 'vistaActual'));
     }
+
 
     /**
      * Mostrar el formulario para crear un nuevo historial.

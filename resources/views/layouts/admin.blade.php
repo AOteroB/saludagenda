@@ -371,7 +371,7 @@
 
                         <li class="nav-item has-treeview {{ request()->is('admin/schedules*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->is('admin/schedules*') ? 'active' : '' }} text-white">
-                                <i class="nav-icon fas fa-calendar-check text-white"></i>
+                                <i class="nav-icon fas fa-clock text-white"></i>
                                 <p>Horarios<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview ml-3">
@@ -392,14 +392,30 @@
                             </ul>
                         </li>
 
-                        <li class="nav-header glass-header">INFORMES</li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="{{ route('admin.reports.index') }}" class="nav-link text-white">
-                                <i class="fas fa-file-pdf nav-icon text-white"></i>
-                                <p>Listados PDF</p>
-                            </a>
+                        <li class="nav-item">
+                            @if($rolRaw === 'patient' || $rolRaw === 'doctor')
+                                <a href="{{ route('admin.events.show') }}" class="nav-link text-white">
+                                    <i class="nav-icon fas fa-calendar-check text-white"></i>
+                                    <p>Mis Citas</p>
+                                </a>
+                            @elseif($rolRaw === 'admin')
+                                <a href="{{ route('admin.events.index') }}" class="nav-link text-white">
+                                    <i class="nav-icon fas fa-calendar-check text-white"></i>
+                                    <p>Citas Reservadas</p>
+                                </a>
+                            @endif
                         </li>
+
+
+                        <li class="nav-header glass-header">INFORMES</li>
+                        @can('admin.user.index')
+                            <li class="nav-item has-treeview">
+                                <a href="{{ route('admin.reports.index') }}" class="nav-link text-white">
+                                    <i class="fas fa-file-pdf nav-icon text-white"></i>
+                                    <p>Listados PDF</p>
+                                </a>
+                            </li>
+                        @endcan
 
                         <li class="nav-item has-treeview">
                             <a href="{{ route('admin.medical_histories.index') }}" class="nav-link text-white">

@@ -1,12 +1,52 @@
 <style>
-    .btn-outline-secondary{
-        color: #000;
+    .btn-outline-secondary {
+        color: #ffffff;
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
+        transition: all 0.3s ease;
     }
 
-    .btn-outline-secondary:hover{
-        color: #ffffff;
-        background-color: #000;
+    .btn-outline-secondary:hover {
+        background: linear-gradient(135deg, #5aa9ff, #1a4673);
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
     }
+
+    .glass-card {
+        background: rgba(252, 252, 252, 0.6);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+
+    .glass-card-header {
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+
+    .glass-card-body {
+        background: rgba(255, 255, 255);
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+
+    .btn-primary {
+        background-color: #2d5eaf;
+        border-color: #2d5eaf;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #1f4a8c;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(93, 165, 255, 0.05);
+    }
+
 
     @media (max-width: 576px) {
         .stat-value {
@@ -33,11 +73,10 @@
     }
 </style>
 
-
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
-            <h2 class="text-secondary"><i class="fas fa-tachometer-alt"></i> Panel Principal</h2>
+            <h2 class="text-black"><i class="fas fa-tachometer-alt"></i> Panel Principal</h2>
             <p class="text-muted mb-3">Resumen de las entidades y estadísticas del sistema.</p>
             <hr>
         </div>
@@ -93,7 +132,7 @@
                     
                     <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
                         <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalEvents }}</h3>
-                        <a href="{{ route('admin.events.index') }}" class="btn btn-outline-secondary">
+                        <a href="{{ route('admin.events.show') }}" class="btn btn-outline-secondary">
                             Más Información <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -121,36 +160,32 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card card-outline card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Listado de Citas Médicas {{Auth::user()->doctor->id}}</h3>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
+    <div class="glass-card mb-4 border">
+        <div class="glass-card-header p-3 text-white">
+            <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
+                <h5 class="mb-0">Listado de Citas Médicas</h5>
             </div>
-            <div class="card-body">
-                @if ($success = Session::get('success'))
-                        <script>
-                          Swal.fire({
-                            position: "top",
-                            icon: "success",
-                            title: 'Paciente creado!',  
-                            text: '{{ $success}}',
-                            showConfirmButton: false,
-                            timer: 3000, 
-                            toast: false,
-                            background: '#f0fdf4', 
-                            color: '#166534',      
-                            iconColor: '#22c55e' 
-                          });
-                        </script>
-                @endif
-                <table id="example1" class="table">
-                    <thead style="text-align: center; background-color: #c5dffc !important; color:rgb(0, 0, 0)">
+        </div>
+        <div class="glass-card-body p-4">
+            @if ($success = Session::get('success'))
+                <script>
+                    Swal.fire({
+                        position: "top",
+                        icon: "success",
+                        title: 'Paciente creado!',
+                        text: '{{ $success }}',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        background: '#f0fdf4',
+                        color: '#166534',
+                        iconColor: '#22c55e'
+                    });
+                </script>
+            @endif
+
+            <div class="table-responsive">
+                <table id="example1" class="table table-hover">
+                    <thead class="thead-light text-center">
                         <tr>
                             <th scope="col">Nro</th>
                             <th scope="col">Especialidad</th>
@@ -166,10 +201,10 @@
                         @php $contador = 1; @endphp
                         @foreach ($events as $event)
                             <tr class="text-center">
-                                <td class="text-center"> {{ $contador++ }}</td>
-                                <td>{{ $event->specialty->name}}</td>
-                                <td>{{ $event->specialty->location}}</td>
-                                <td>{{ $event->user->name}} {{ $event->user->last_name}}</td>
+                                <td>{{ $contador++ }}</td>
+                                <td>{{ $event->specialty->name }}</td>
+                                <td>{{ $event->specialty->location }}</td>
+                                <td>{{ $event->user->name }} {{ $event->user->last_name }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start)->format('H:i') }} - {{ \Carbon\Carbon::parse($event->end)->format('H:i') }}</td>
                                 <td title="{{ $event->created_at->format('Y-m-d H:i') }}">
@@ -177,8 +212,8 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('doctor.edit.patient', ['user_id' => $event->user->id]) }}" 
-                                        class="btn btn-sm btn-primary mb-1">
-                                        Editar
+                                       class="btn btn-sm btn-primary mb-1">
+                                       Editar
                                     </a>
                                 </td>
                             </tr>
@@ -213,22 +248,6 @@
                           previous: "Anterior"
                         }
                       },
-                
-                      // Botones
-                      buttons: [
-                        {
-                          extend: 'collection',
-                          text: 'Exportar Datos',
-                          orientation: 'landscape',
-                          buttons: [
-                            { extend: 'copy', text: 'Copiar' },
-                            { extend: 'pdf' },
-                            { extend: 'csv' },
-                            { extend: 'excel' },
-                            { extend: 'print', text: 'Imprimir' }
-                          ]
-                        },
-                      ]
                     })
                     .buttons()
                     .container()
@@ -274,4 +293,4 @@
             </div>
         </div>
     </div>
-</div>
+

@@ -224,7 +224,7 @@ Route::middleware('auth')->group(function () {
         ->name('admin.events.create');
 
     // Ver cita
-    Route::get('/admin/events/show/{id}', [EventController::class, 'show'])
+    Route::get('/admin/events/show', [EventController::class, 'show'])
         ->middleware('can:admin.appointments.show')
         ->name('admin.events.show');
 

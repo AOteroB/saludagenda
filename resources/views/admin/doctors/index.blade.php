@@ -10,13 +10,15 @@
         </div>
     </div>
 
-    <div class="glass-card mb-4 border border-dark">
+    <div class="glass-card mb-4 border">
         <div class="glass-card-header p-3 text-white">
             <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
                 <h5 class="mb-0">Listado de Doctores Registrados</h5>
-                <a href="{{ route('admin.doctors.create') }}" class="btn btn-sm btn-light">
-                    <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
-                </a>
+                @can('admin.doctors.create')
+                    <a href="{{ route('admin.doctors.create') }}" class="btn btn-sm btn-light" style="color: #00326b">
+                        <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="glass-card-body p-4">
@@ -43,10 +45,14 @@
                         <tr>
                             <th>Nro</th>
                             <th>Nombre</th>
-                            <th>Teléfono</th>
+                            @can('admin.doctors.create')
+                                <th>Teléfono</th>
+                            @endcan
                             <th>Especialidad</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
+                            @can('admin.doctors.create')
+                                <th>Acciones</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +61,9 @@
                             <tr class="text-center align-middle">
                                 <td>{{ $contador++ }}</td>
                                 <td>Dr. {{ $doctor->name . ' ' . $doctor->last_name }}</td>
-                                <td>{{ $doctor->phone ?? 'No especificado' }}</td>
+                                @can('admin.doctors.create')
+                                    <td>{{ $doctor->phone ?? 'No especificado' }}</td>
+                                @endcan
                                 @php
                                     $specialtyColors = [
                                         'Cardiología' => 'badge-danger',
@@ -79,21 +87,23 @@
                                         {{ ucfirst($doctor->status) }}
                                     </span>
                                 </td>
-                                <td class="text-center">
-                                    <a href="{{ route('admin.doctors.show', $doctor->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.doctors.edit', $doctor->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST" class="d-inline delete-form">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                @can('admin.doctors.create')
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.doctors.show', $doctor->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('admin.doctors.edit', $doctor->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST" class="d-inline delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>
@@ -157,10 +167,10 @@
     }
 
     .btn-light:hover {
-        background-color: #488BDA; 
-        color: white !important;
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 5px 10px 10px rgba(255, 255, 255, 0.3);
+        background-color: #ffffff; 
+        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px) scale(1.1);
+        transition: all 0.3s ease;
     }
 
     .badge {

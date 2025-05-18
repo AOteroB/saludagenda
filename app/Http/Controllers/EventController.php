@@ -100,7 +100,7 @@ class EventController extends Controller
         $event->specialty_id = $specialty->id;
         $event->save();
     
-        // 9. Redirigir al usuario con mensaje de éxito
+        // Redirigir al usuario con mensaje de éxito
         return redirect()->route('admin.index')
             ->with('success', 'Su cita ha sido reservada exitosamente.');
     }
@@ -108,12 +108,26 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
-        $vistaActual = 'Mis Citas Médicas';   
-        $events = Event::where('user_id', $id)->get();
-        return view ('admin.events.show', compact('events', 'vistaActual'));
+        $vistaActual = 'Mis Citas Médicas';
 
+        $user = auth()->user();
+
+        if ($user->hasRole('doctor')) {
+            $doctor = $user->doctor; // Relación doctor
+            $events = Event::with('doctor', 'specialty')
+                        ->where('doctor_id', $doctor->id)
+                        ->get();
+        } elseif ($user->hasRole('patient')) {
+            $events = Event::with('doctor', 'specialty')
+                        ->where('user_id', $user->id)
+                        ->get();
+        } else {
+            abort(403); // Usuario sin permisos
+        }
+
+        return view('admin.events.show', compact('events', 'vistaActual'));
     }
 
     /**

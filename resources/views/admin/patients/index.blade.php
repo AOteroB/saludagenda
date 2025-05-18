@@ -10,13 +10,15 @@
         </div>
     </div>
 
-    <div class="glass-card mb-4 border border-dark">
+    <div class="glass-card mb-4 border">
         <div class="glass-card-header p-3 text-white">
             <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
                 <h5 class="mb-0">Listado de Pacientes Registrados</h5>
-                <a href="{{ route('admin.patients.create') }}" class="btn btn-sm btn-light">
-                    <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
-                </a>
+                 @can('admin.patients.create')
+                    <a href="{{ route('admin.patients.create') }}" class="btn btn-sm btn-light">
+                        <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
+                    </a>
+                @endcan
             </div>
         </div>
 
@@ -125,10 +127,10 @@
     }
 
     .btn-light:hover {
-        background-color: #488BDA; 
-        color: white !important;
-        transform: translateY(-5px) scale(1.05);
-        box-shadow: 3px 10px 10px rgba(255, 255, 255, 0.3);
+        background-color: #ffffff; 
+        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px) scale(1.1);
+        transition: all 0.3s ease;
     }
 
     .btn-outline-info {
