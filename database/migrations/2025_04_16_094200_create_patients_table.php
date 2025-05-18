@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('postal_code', 5); // Código Postal en España tiene 5 caracteres
             $table->string('phone', 15); // Teléfono: máximo 15 caracteres (puede incluir prefijo internacional)
             $table->string('phone_emergence', 15)->nullable(); //Contacto de emergencia
-            $table->string('email', 255)->nullable()->unique(); // Email
+            $table->string('email', 255)->unique();
             $table->string('health_card_number')->unique()->nullable(); // Número de tarjeta sanitaria
             $table->string('health_insurance')->nullable(); // Seguro médico
             $table->text('allergies')->nullable(); // Alergias

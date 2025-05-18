@@ -13,7 +13,7 @@
   <style>
     body { 
       font-family: 'Inter', sans-serif;
-      background-color: #C4FFFF;  /* Color de fondo para todo el body */
+      background-color: #C4FFFF;  
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
     }
@@ -77,13 +77,19 @@
         {{-- Email --}}
         <div>
           <label for="email" class="block text-sm font-medium">Correo electrónico</label>
-          <input type="email" name="email" id="email" required>
+          <input type="email" value="{{ old('email') }}" name="email" id="email" required>
+          @error('email')
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Password --}}
         <div>
           <label for="password" class="block text-sm font-medium">Contraseña</label>
           <input type="password" name="password" id="password" required>
+          @error('password')
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Remember Me y Link --}}

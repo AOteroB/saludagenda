@@ -11,31 +11,10 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Controlador de Registro
-    |--------------------------------------------------------------------------
-    |
-    | Este controlador gestiona el registro de nuevos usuarios, así como
-    | su validación y creación. Por defecto, este controlador usa un trait
-    | que proporciona esta funcionalidad sin requerir código adicional.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Ruta a la que se redirige después del registro.
-     *
-     * @var string
-     */
     protected $redirectTo = '/admin';
 
-    /**
-     * Crear una nueva instancia del controlador.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
@@ -47,9 +26,9 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-     protected function validator(array $data)
+    protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => [
@@ -60,16 +39,61 @@ class RegisterController extends Controller
             ],
             'dni' => ['nullable', 'string', 'size:9', 'regex:/^([XYZ]?\d{7,8}[A-Z])$/'],
             'dob' => ['nullable', 'date'],
-            // Otros campos opcionales para paciente, como los de contacto
             'address' => ['nullable', 'string', 'max:255'],
             'postal_code' => ['nullable', 'string', 'size:5'],
             'phone' => ['nullable', 'string', 'max:15'],
             'phone_emergence' => ['nullable', 'string', 'max:15'],
-            // Más validaciones si es necesario
         ]);
+
+        // Validación personalizada para coincidencia exacta de dni y email
+        if (!empty($data['dni']) && !empty($data['email'])) {
+            $patientExists = Patient::where('dni', $data['dni'])
+                ->where('email', $data['email'])
+                ->exists();
+
+            $dniExists = Patient::where('dni', $data['dni'])->exists();
+            $emailExists = Patient::where('email', $data['email'])->exists();
+
+            if (!$patientExists && ($dniExists || $emailExists)) {
+                $validator->after(function ($validator) {
+                    $validator->errors()->add('dni', 'El DNI y el email no coinciden con una ficha de paciente existente.');
+                });
+            }
+        }
+
+        if ($this->shouldCreatePatient($data)) {
+            $validator->addRules([
+            // Si se va a crear el paciente, estos campos deben estar presentes
+            'last_name' => ['required', 'string', 'max:150'],
+            'dob' => ['required', 'date'],
+            'dni' => ['required', 'string', 'size:9', 'regex:/^([XYZ]?\d{7,8}[A-Z])$/', 'unique:patients,dni'],
+            'sex' => ['required', 'in:hombre,mujer'],
+            'address' => ['required', 'string', 'max:255'],
+            'postal_code' => ['required', 'string', 'size:5'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['unique:patients,email'],
+         ]);
+        }
+
+         return $validator;
     }
-    
-    
+
+    /**
+     * Determina si debe crearse un paciente nuevo según datos.
+     *
+     * @param array $data
+     * @return bool
+     */
+    protected function shouldCreatePatient(array $data)
+    {
+        if (!empty($data['dni']) && !empty($data['email'])) {
+            return !Patient::where('dni', $data['dni'])
+                ->where('email', $data['email'])
+                ->exists();
+        }
+
+        return true; // Si falta alguno, asumimos que no hay coincidencia válida
+    }
 
     /**
      * Crear nuevo usuario y asociar o crear ficha de paciente
@@ -77,50 +101,43 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-     public function create(array $data)
-{
-    // Buscar paciente existente por DNI (si se proporcionó) o email
-    $existingPatient = null;
+    public function create(array $data)
+    {
+        $existingPatient = null;
 
-    if (!empty($data['dni'])) {
-        $existingPatient = Patient::where('dni', $data['dni'])->first();
-    }
+        if (!empty($data['dni']) && !empty($data['email'])) {
+            $existingPatient = Patient::where('dni', $data['dni'])
+                ->where('email', $data['email'])
+                ->first();
+        }
 
-    if (!$existingPatient) {
-        $existingPatient = Patient::where('email', $data['email'])->first();
-    }
+        if (!$existingPatient) {
+            // Aquí ya validamos que los campos obligatorios estén presentes
+            $existingPatient = Patient::create([
+                'name' => $data['name'],
+                'last_name' => $data['last_name'] ?? null,
+                'dob' => $data['dob'] ?? null,
+                'dni' => $data['dni'] ?? null,
+                'email' => $data['email'],
+                'sex' => $data['sex'] ?? null,
+                'address' => $data['address'] ?? null,
+                'postal_code' => $data['postal_code'] ?? null,
+                'phone' => $data['phone'] ?? null,
+                'phone_emergence' => $data['phone_emergence'] ?? null,
+            ]);
+        }
 
-    // Crear paciente si no existe
-    if (!$existingPatient) {
-        $existingPatient = Patient::create([
+        $user = User::create([
             'name' => $data['name'],
-            'last_name' => $data['last_name'] ?? null,
-            'dob' => $data['dob'] ?? null,
-            'dni' => $data['dni'] ?? null,
             'email' => $data['email'],
-            'sex' => $data['sex'] ?? null,
-            'address' => $data['address'] ?? null,
-            'postal_code' => $data['postal_code'] ?? null,
-            'phone' => $data['phone'] ?? null,
-            'phone_emergence' => $data['phone_emergence'] ?? null,
+            'password' => Hash::make($data['password']),
+            'patient_id' => $existingPatient->id,
         ]);
+        $user->save();
+        $user->assignRole('patient');
+
+        session()->flash('success', '¡Usuario registrado correctamente!');
+
+        return $user;
     }
-
-
-    // Crear usuario asociado a paciente
-    $user = User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password']),
-        'patient_id' => $existingPatient->id,
-    ]);
-    $user->save();
-    $user->assignRole('patient');
-  
-
-    session()->flash('success', '¡Usuario registrado correctamente!');
-
-    return $user;
-}
-
 }
