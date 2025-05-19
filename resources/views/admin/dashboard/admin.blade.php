@@ -1,16 +1,29 @@
+<!-- Incluir CSS general -->
+<link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
+
 <style>
-.btn-outline-secondary {
-    color: #ffffff;
-    background: linear-gradient(135deg, #4a90e2, #193c5f);
-    transition: all 0.3s ease;
-}
+    .border-4 {
+        border-top-width: 2px !important;
+    }
+    
+    .table .thead-light th {
+        background-color: #EEF6FC;
+        color: #5282b2;
+        border-color: #cdcdcd;
+    }
+    
+    .btn-outline-secondary {
+        color: #ffffff;
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
+        transition: all 0.3s ease;
+    }
+    .border-purple {
+        border-top: 2px solid #6f42c1 !important;
+    }
 
-.btn-outline-secondary:hover {
-    background: linear-gradient(135deg, #5aa9ff, #1a4673);
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
-}
-
+    .border-teal {
+        border-top: 2px solid #20c997 !important;
+    }
 
     @media (max-width: 576px) {
         .stat-value {
@@ -65,7 +78,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Personal Médico -->
         <div class="col-sm-12 col-md-6 mb-4">
@@ -143,6 +155,25 @@
             </div>
         </div>
 
+        <!-- Horarios -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-purple border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-clock-history mr-2 text-purple icon-responsive"></i> Horarios de Atención
+                    </h5>
+                    <p class="text-muted mb-2">Disponibilidad horaria semanal del personal médico.</p>
+
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0"> - </h3>
+                        <a href="{{ route('admin.schedules.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Reportes PDF -->
         <div class="col-sm-12 col-md-6 mb-4">
             <div class="card shadow-sm border-top border-secondary border-4">
@@ -155,6 +186,25 @@
                     <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
                         <h3 class="text-dark bg-light px-3 py-1 rounded m-0"> - </h3>
                         <a href="{{ route('admin.reports.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historias Médicas-->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-teal border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="fas fa-file-medical-alt mr-2 text-teal icon-responsive"></i> Historias Médicas
+                    </h5>
+                    <p class="text-muted mb-2">Registros clínicos individuales de cada paciente.</p>
+
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0"> - </h3>
+                        <a href="{{ route('admin.medical_histories.index') }}" class="btn btn-outline-secondary">
                             Más Información <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

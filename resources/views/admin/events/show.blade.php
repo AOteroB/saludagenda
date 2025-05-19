@@ -1,53 +1,13 @@
 @extends ('layouts.admin')
 
 @section('content')
+<!-- Incluir CSS general -->
+<link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
 <style>
-    .btn-outline-secondary {
-        color: #ffffff;
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline-secondary:hover {
-        background: linear-gradient(135deg, #5aa9ff, #1a4673);
-        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-        transform: translateY(-2px);
-    }
-
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
-
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
-
-    .btn-primary {
-        background-color: #2d5eaf;
-        border-color: #2d5eaf;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background-color: #1f4a8c;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
+    .table .thead-light th {
+        background-color: #EEF6FC;
+        color: #5282b2;
+        border-color: #cdcdcd;
     }
 
     @media (max-width: 576px) {

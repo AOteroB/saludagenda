@@ -1,3 +1,6 @@
+<!-- Incluir CSS general -->
+<link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
+
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
@@ -24,72 +27,79 @@
                 });
             </script>
         @endif
-
-        <div class="col-lg-3 col-6">
-            <div class="small-glass-card border-success">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h3>{{ $totalEvents }}</h3>
-                        <p>Mis próximas citas</p>
-                    </div>
-                    <div class="text-success icon-large">
-                        <i class="bi bi-calendar-check"></i>
+        <!-- Citas Programadas -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-danger border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-calendar-check mr-2 text-danger icon-responsive"></i> Mis Citas Médicas Programadas
+                    </h5>
+                    <p class="text-muted mb-2">Listado de todas mis consultas reservadas.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalEvents }}</h3>
+                        <a href="{{ route('admin.events.show') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
                     </div>
                 </div>
-                <a href="{{ route('admin.events.show', ['id' => Auth::user()->id]) }}" class="small-box-footer">
-                    Ver Citas <i class="fas fa-arrow-circle-right ms-2"></i>
-                </a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
-            <div class="small-glass-card border-primary">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h3>{{ $totalDoctors }}</h3>
-                        <p>Doctores Disponibles</p>
-                    </div>
-                    <div class="text-primary icon-large">
-                        <i class="fas fa-user-md"></i>
+        <!-- Áreas Médicas -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-purple border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-heart-pulse mr-2 text-purple icon-responsive"></i> Áreas Médicas Disponibles
+                    </h5>
+                    <p class="text-muted mb-2">Especialidades médicas que ofrece el sistema.</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalSpecialties }}</h3>
+                        <a href="{{ route('admin.specialties.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
                     </div>
                 </div>
-                <a href="{{ route('admin.doctors.index') }}" class="small-box-footer">
-                    Ver Doctores <i class="fas fa-arrow-circle-right ms-2"></i>
-                </a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
-            <div class="small-glass-card border-danger">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h3>{{ $totalSpecialties }}</h3>
-                        <p>Especialidades</p>
-                    </div>
-                    <div class="text-danger icon-large">
-                        <i class="bi bi-heart-pulse"></i>
-                    </div>
+        <!-- Personal Médico -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-teal border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="fas fa-user-md mr-2 text-teal icon-responsive"></i> Personal Médico Registrado
+                    </h5>
+                    <p class="text-muted mb-2">Profesionales de la salud activos en la plataforma.</p>
+                    
+                     <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0">{{ $totalDoctors }}</h3>
+                        <a href="{{ route('admin.doctors.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                     </div>
                 </div>
-                <a href="{{ route('admin.specialties.index') }}" class="small-box-footer">
-                    Ver Especialidades <i class="fas fa-arrow-circle-right ms-2"></i>
-                </a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
-            <div class="small-glass-card border-secondary">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h3>-</h3>
-                        <p>Horarios de Atención</p>
-                    </div>
-                    <div class="text-secondary icon-large">
-                        <i class="bi bi-clock-history"></i>
+        <!-- Horarios Disponibles -->
+        <div class="col-sm-12 col-md-6 mb-4">
+            <div class="card shadow-sm border-top border-info border-4">
+                <div class="card-body px-3" style="padding-bottom: 10px">
+                    <h5 class="mb-1 text-dark">
+                        <i class="bi bi-clock-history mr-2 text-info icon-responsive"></i> Horarios de Atención
+                    </h5>
+                    <p class="text-muted mb-2">Disponibilidad horaria semanal del personal médico..</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                        <h3 class="text-dark bg-light px-3 py-1 rounded m-0"> - </h3>
+                        <a href="{{ route('admin.schedules.index') }}" class="btn btn-outline-secondary">
+                            Más Información <i class="fas fa-arrow-circle-right"></i>
+                        </a>
                     </div>
                 </div>
-                <a href="{{ route('admin.schedules.index') }}" class="small-box-footer">
-                    Ver Horarios <i class="fas fa-arrow-circle-right ms-2"></i>
-                </a>
             </div>
         </div>
     </div>
@@ -182,8 +192,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer bg-white border-top border-primary">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" id="submit-button" class="btn btn-primary" disabled>Reservar Cita</button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" id="submit-button" class="btn btn-outline-success" disabled>Reservar Cita</button>
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         customButtons: {
             addEventButton: {
-                text: 'Reservar Cita',                
                 click: function () {
                     document.getElementById('reservationForm').reset();
                     document.getElementById('availabilityStatus').innerHTML = '';
@@ -309,7 +318,82 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
   </script>
+
+
 <style>
+    .btn-outline-secondary {
+        color: #ffffff;
+        background: linear-gradient(135deg, #4a90e2, #193c5f);
+        transition: all 0.3s ease;
+    }
+
+    .border-4 {
+        border-top-width: 2px !important;
+    }
+
+    .border-purple {
+        border-top: 2px solid #6f42c1 !important;
+    }
+
+    .border-teal {
+        border-top: 2px solid #20c997 !important;
+    }
+    
+   
+    .btn-outline-danger {
+        background: linear-gradient(135deg, rgba(255, 54, 54, 0.2), rgba(255, 2, 2, 0.2));
+        border: 1px solid rgba(255, 0, 0, 0.4);
+        backdrop-filter: blur(5px);
+        color: #b30000;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-danger:hover {
+        background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    }
+
+    .btn-outline-success {
+        background: linear-gradient(135deg, rgba(0, 255, 157, 0.2), rgba(0, 153, 76, 0.2));
+        border: 1px solid rgba(0, 153, 76, 0.4);
+        backdrop-filter: blur(5px);
+        color: #006633;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-success:hover {
+        background: linear-gradient(135deg, #00cc99, #00994d);
+    }
+
+    .btn-outline-success:hover,
+    .btn-outline-danger:hover {
+        color: white;
+        box-shadow: 10px 10px 10px rgba(105, 105, 105, 0.3);
+        transform: translateY(-2px) scale(1.1);
+    }
+
+
+    @media (max-width: 576px) {
+        .stat-value {
+            font-size: 24px;
+        }
+        .card-body h5 {
+            font-size: 1rem;
+        }
+        .icon-responsive {
+            font-size: 1rem;
+        }
+    }
+
+    @media (min-width: 577px) {
+        .stat-value {
+            font-size: 32px;
+        }
+        .card-body h5 {
+            font-size: 1.25rem;
+        }
+        .icon-responsive {
+            font-size: 1.2rem;
+        }
+    }
+    
     /* Contenedor general del calendario */
     #calendar {
         font-family: 'Segoe UI', sans-serif;
@@ -380,69 +464,5 @@ document.addEventListener('DOMContentLoaded', function() {
     .small-box>.small-box-footer {
         background-color: rgb(99 145 255 / 10%);
     }
-
-    .small-glass-card {
-    background: rgba(252, 252, 252, 0.6);
-    border-radius: 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    padding: 1rem 1.5rem;
-}
-
-.border-success {
-    border-top: 4px solid #28a745 !important; /* verde */
-}
-
-.border-primary {
-    border-top: 4px solid #007bff !important; /* azul */
-}
-
-.border-danger {
-    border-top: 4px solid #dc3545 !important; /* rojo */
-}
-
-.border-secondary {
-    border-top: 4px solid #6c757d !important; /* gris */
-}
-
-.small-glass-card h3 {
-    background-color: #f8f9fa;
-    padding: 0.2rem 0.8rem;
-    border-radius: 0.375rem;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-}
-
-.small-glass-card p {
-    color: #6c757d;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
-
-/* Link button similar */
-.small-glass-card a.small-box-footer {
-    color: #ffffff;
-    background: linear-gradient(135deg, #4a90e2, #193c5f);
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.small-glass-card a.small-box-footer:hover {
-    background: linear-gradient(135deg, #5aa9ff, #1a4673);
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
-}
-
-.small-glass-card .icon-large {
-    font-size: 2rem;
-    opacity: 0.75;
-}
 
 </style>

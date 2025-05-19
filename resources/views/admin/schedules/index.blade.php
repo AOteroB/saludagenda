@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="card-body table-responsive">
-                    <table id="calendarTable" class="table table-hover text-center align-middle">
+                    <table id="calendarTable" class="table table-hover table-bordered text-center align-middle">
                         <thead class="thead-light">
                             <tr>
                                 <th>Horario</th>
@@ -225,6 +225,13 @@
 @push('styles')
     <!-- Incluir CSS general -->
     <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
+    <style>
+        .table .thead-light th {
+            background-color: #EEF6FC;
+            color: #5282b2;
+            border-color: #cdcdcd;
+        }
+    </style>
 @endpush
 
 @push('scripts')

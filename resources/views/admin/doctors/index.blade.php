@@ -45,7 +45,7 @@
                         <tr>
                             <th>Nro</th>
                             <th>Nombre</th>
-                            @can('admin.doctors.create')
+                            @can('admin.patients.show')
                                 <th>Teléfono</th>
                             @endcan
                             <th>Especialidad</th>
@@ -61,7 +61,7 @@
                             <tr class="text-center align-middle">
                                 <td>{{ $contador++ }}</td>
                                 <td>Dr. {{ $doctor->name . ' ' . $doctor->last_name }}</td>
-                                @can('admin.doctors.create')
+                                @can('admin.patients.show')
                                     <td>{{ $doctor->phone ?? 'No especificado' }}</td>
                                 @endcan
                                 @php
@@ -189,10 +189,10 @@
             color: #4338ca;
         }
 
-        .thead-light th {
-            background-color: #EBF4FF;
-            text-align: center;
-            color: black;
+        .table .thead-light th {
+            background-color: #EEF6FC;
+            color: #5282b2;
+            border-color: #cdcdcd;
         }
     </style>
 @endpush

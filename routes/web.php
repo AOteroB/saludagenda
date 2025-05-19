@@ -189,12 +189,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/schedules/{id}', [ScheduleController::class, 'show'])
         ->middleware('can:admin.schedules.show')->name('admin.schedules.show');
-
-    Route::get('/admin/schedules/{id}/edit', [ScheduleController::class, 'edit'])
-        ->middleware('can:admin.schedules.edit')->name('admin.schedules.edit');
-
-    Route::put('/admin/schedules/{id}', [ScheduleController::class, 'update'])
-        ->middleware('can:admin.schedules.update')->name('admin.schedules.update');
         
     Route::delete('/admin/schedules/{id}', [ScheduleController::class, 'destroy'])
         ->middleware('can:admin.schedules.destroy')->name('admin.schedules.destroy');

@@ -106,6 +106,14 @@
 @push('styles')
     <!-- Incluir CSS general -->
     <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
+
+    <style>
+        .table .thead-light th {
+            background-color: #EEF6FC;
+            color: #5282b2;
+            border-color: #cdcdcd;
+        }
+    </style>
 @endpush
 
 @push('scripts')
