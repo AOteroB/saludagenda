@@ -53,7 +53,7 @@
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
-            <h2 class="text-black"><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+            <h2 class="text-black"><i class="fas fa-tachometer-alt"></i> Panel Principal</h2>
             <p class="text-muted mb-3">Resumen de las entidades y estadísticas del sistema.</p>
             <hr>
         </div>

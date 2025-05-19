@@ -230,6 +230,11 @@
 
                     <!-- Menú desplegable (dropdown) -->
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <!-- Opción para editar perfil -->
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                            Editar perfil
+                        </a>
+
                         <!-- Opción para cerrar sesión -->
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

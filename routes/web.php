@@ -43,6 +43,17 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'reports'])
     ->name('admin.reports.index')->middleware('auth')->middleware('can:admin.user.index');
 
+// EDICION DE PERFIL
+Route::get('/profile', [UserController::class, 'editProfile'])
+    ->middleware('auth')
+    ->middleware('can:profile.edit')
+    ->name('profile.edit');
+
+Route::put('/admin/user/profile', [UserController::class, 'updateProfile'])
+    ->middleware('auth')
+    ->middleware('can:profile.update')
+    ->name('profile.update');
+
 ############################################################
 ##                     ZONA USUARIOS                      ##
 ############################################################
