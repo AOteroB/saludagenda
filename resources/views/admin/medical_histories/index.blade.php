@@ -13,7 +13,7 @@
     <div class="glass-card mb-4 border">
         <div class="glass-card-header p-3 text-white">
             <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
-                <h5 class="mb-0">Listado de Historiales Médicos</h5>
+                <h5 class="mb-0">Historias Médicas del Paciente</h5>
                 @can('admin.medical_histories.create')
                     <a href="{{ route('admin.medical_histories.create') }}" class="btn btn-sm btn-light">
                         <i class="fas fa-user-plus me-1"></i> Registrar Nuevo
@@ -38,175 +38,160 @@
                     });
                 </script>
             @endif
+            
+            {{-- Filtrar para que los usuarios con rol "patient" solo vean su propio historial --}}
+            @php
+                $user = auth()->user();
+                if ($user->hasRole('patient')) {
+                    $patients = $patients->filter(function ($patient) use ($user) {
+                        return $patient->id === $user->patient->id;
+                    });
+                }
+            @endphp
 
-            <div class="table-responsive">
-                <table id="example1" class="table table-hover">
-                    <thead class="thead-light text-center">
-                        <tr>
-                            <th>Especialidad</th>
-                            <th>Paciente</th>
-                            <th>Doctor</th>
-                            <th>Fecha</th>
-                            <th>Diagnóstico</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($histories as $history)
-
-                            @php
-                                $user = auth()->user();
-                                $canView = false;
-
-                                if ($user->hasRole('admin') || $user->hasRole('doctor')) {
-                                    $canView = true;
-                                } elseif ($user->hasRole('patient') && $history->patient->id == $user->patient->id) {
-                                    $canView = true;
-                                }
-                            @endphp
-
-                            @if ($canView)
-
-                                <tr class="text-center">
-                                    <td>{{ $history->doctor->specialty->name }}</td>
-                                    <td>{{ $history->patient->name }} {{ $history->patient->last_name }}</td>
-                                    <td>Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }}</td>
-                                    <td>{{ $history->date }}</td>
-                                    <td>{{ Str::limit($history->diagnosis, 30) }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.medical_histories.show', $history->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        @can('admin.medical_histories.edit')
-                                            <a href="{{ route('admin.medical_histories.edit', $history->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        @endcan
-                                        @can('admin.medical_histories.destroy')
-                                            <form action="{{ route('admin.medical_histories.destroy', $history->id) }}" method="POST" class="d-inline delete-form">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="mb-4">
+                <input type="text" id="historialSearch" class="form-control" placeholder="Buscar por paciente o diagnóstico...">
             </div>
+
+            {{-- Recorremos todos los pacientes y mostramos sus historiales médicos agrupados, solo si tienen al menos uno registrado --}}
+            @foreach ($patients as $patient)
+                @if ($patient->medicalHistories->isNotEmpty())
+                    <div class="glass-card mb-4 border border-black">
+                        <div class="bg-light border-bottom px-4 py-3 d-flex justify-content-between align-items-center rounded-top">
+                            <div class="fw-bold text-primary">
+                                <i class="fas fa-user-injured me-2" style="margin-right: 5px"></i>{{ $patient->name }} {{ $patient->last_name }}
+                            </div>
+                            <span class="badge bg-primary-subtle text-dark">
+                                {{ $patient->medicalHistories->count() }} historial/es
+                            </span>
+                                <a href="{{ route('admin.medical_histories.pdf_all', $patient->id) }}" class="btn btn-sm btn-dark" title="Imprimir todos los historiales del paciente">
+                                    <i class="fas fa-print"></i> Descargar Historial Completo
+                                </a>
+                        </div>
+                        <div class="glass-card-body p-3">
+                            <ul class="list-group">
+                                {{-- Iteramos sobre los pacientes y renderizamos una tarjeta por cada uno que tenga historiales médicos, 
+                                mostrando su nombre y la cantidad de historiales asociados --}}
+                                @foreach ($patient->medicalHistories as $history)
+                                    @php
+                                        $user = auth()->user();
+                                        $canView = false;
+
+                                        if ($user->hasRole('admin') || $user->hasRole('doctor')) {
+                                            $canView = true;
+                                        } elseif ($user->hasRole('patient') && $history->patient->id == $user->patient->id) {
+                                            $canView = true;
+                                        }
+                                    @endphp
+
+                                    @if ($canView)
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>{{ $history->date }}</strong>
+                                                <span class="text-muted"> | {{ $history->doctor->specialty->name }} - Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }}</span><br>
+                                                <span>{{ Str::limit($history->diagnosis, 60) }}</span>
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('admin.medical_histories.show', $history->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                @can('admin.medical_histories.edit')
+                                                    <a href="{{ route('admin.medical_histories.edit', $history->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('admin.medical_histories.destroy')
+                                                    <form action="{{ route('admin.medical_histories.destroy', $history->id) }}" method="POST" class="d-inline delete-form">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                                <a href="{{ route('admin.medical_histories.pdf_single', $history->id) }}" class="btn btn-sm btn-outline-secondary" title="Imprimir historial individual">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
     </div>
 </div>
 @endsection
 
 @push('styles')
-<style>
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
-
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
-
-    .btn-light:hover {
-        background-color: #ffffff;
-        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px) scale(1.1);
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline-info {
-        color: #0dcaf0;
-        border-color: #0dcaf0;
-    }
-
-    .btn-outline-info:hover {
-        background-color: #0dcaf0;
-        color: white;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
-    }
-
-    .thead-light {
-        background-color: #ebf4ff !important;
-    }
-</style>
+    <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
 @endpush
+
 
 @push('scripts')
 <script>
-    $(function () {
-        const table = $("#example1").DataTable({
-            pageLength: 10,
-            responsive: true,
-            lengthChange: true,
-            autoWidth: false,
-            language: {
-                emptyTable: "No hay información",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                infoEmpty: "Mostrando 0 a 0 de 0 registros",
-                infoFiltered: "(Filtrado de _MAX_ total registros)",
-                lengthMenu: "Mostrar _MENU_ registros",
-                loadingRecords: "Cargando...",
-                processing: "Procesando...",
-                search: "Buscador:",
-                zeroRecords: "Sin resultados encontrados",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior"
+    // Función para eliminar tildes y convertir a minúsculas
+    function normalizeText(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    $(document).ready(function () {
+
+        // Confirmación al eliminar
+        $(document).on('submit', '.delete-form', function (e) {
+            e.preventDefault();
+            const form = this;
+            Swal.fire({
+                title: '¿Eliminar historial?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'warning',
+                iconHtml: '<i class="fas fa-notes-medical" style="color: #dc3545;"></i>',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    popup: 'border border-danger shadow-lg rounded-lg',
+                    title: 'fw-bold text-danger',
+                    confirmButton: 'btn btn-danger px-4 py-2',
+                    cancelButton: 'btn btn-secondary px-4 py-2'
                 }
-            }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
         });
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: '¿Eliminar historial?',
-                    text: "¡Esta acción no se puede deshacer!",
-                    icon: 'warning',
-                    iconHtml: '<i class="fas fa-notes-medical" style="color: #dc3545;"></i>',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
-                    cancelButtonText: 'Cancelar',
-                    customClass: {
-                        popup: 'border border-danger shadow-lg rounded-lg',
-                        title: 'fw-bold text-danger',
-                        confirmButton: 'btn btn-danger px-4 py-2',
-                        cancelButton: 'btn btn-secondary px-4 py-2'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit();
+        // Buscador que ignora tildes
+        $('#historialSearch').on('keyup', function () {
+            const searchTerm = normalizeText($(this).val());
+
+            $('.glass-card.border.border-black').each(function () {
+                const patientName = normalizeText($(this).find('.fw-bold.text-primary').text());
+
+                let foundInHistories = false;
+                $(this).find('ul.list-group li.list-group-item').each(function () {
+                    const diagnosisText = normalizeText($(this).text());
+                    if (diagnosisText.indexOf(searchTerm) !== -1) {
+                        foundInHistories = true;
+                        return false;
                     }
                 });
+
+                if (patientName.indexOf(searchTerm) !== -1 || foundInHistories) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
             });
         });
     });
 </script>
 @endpush
+
+

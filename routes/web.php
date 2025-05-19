@@ -252,6 +252,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/medical-histories', [MedicalHistoryController::class, 'store'])
         ->middleware('can:admin.medical_histories.store')->name('admin.medical_histories.store');
 
+    // PDF de un historial médico individual
+    Route::get('/admin/medical-histories/pdf/{id}', [MedicalHistoryController::class, 'pdfSingle'])
+        ->middleware('can:admin.medical_histories.pdf')->name('admin.medical_histories.pdf_single');
+    
+    // PDF con todos los historiales de un paciente
+    Route::get('/admin/patients/{id}/medical-histories/pdf', [MedicalHistoryController::class, 'pdfAll'])
+        ->middleware('can:admin.medical_histories.pdf')->name('admin.medical_histories.pdf_all');
+
     Route::get('/admin/medical-histories/{medicalHistory}', [MedicalHistoryController::class, 'show'])
         ->middleware('can:admin.medical_histories.show')->name('admin.medical_histories.show');
 

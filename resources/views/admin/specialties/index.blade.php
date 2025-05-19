@@ -1,6 +1,7 @@
 @extends ('layouts.admin')
 
 @section('content')
+
 <div class="container">
     <div class="row mb-4">
         <div class="col-12">
@@ -54,7 +55,7 @@
                     <tbody>
                         @php $contador = 1; @endphp
                         @foreach ($specialties as $specialty)
-                            <tr class="text-center">
+                            <tr class="text-center align-middle">
                                 <td>{{ $contador++ }}</td>
                                 <td>{{ $specialty->name }}</td>
                                 <td>{{ $specialty->phone }}</td>
@@ -69,7 +70,7 @@
                                     <a href="{{ route('admin.specialties.show', $specialty->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    @can('admin.user.index')
+                                    @can('admin.specialties.destroy')
                                         <a href="{{ route('admin.specialties.edit', $specialty->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
@@ -90,117 +91,52 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('styles')
-<style>
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
-
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
-
-    .badge {
-        padding: 0.45em 0.6em;
-        font-size: 0.8em;
-        font-weight: 500;
-        border-radius: 0.5rem;
-    }
-
-    .badge-success {
-        background-color: #28a745;
-        color: white;
-    }
-
-    .badge-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btn-light {
-        color: #193c5f !important; 
-    }
-
-    .btn-light:hover {
-        background-color: #ffffff; 
-        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px) scale(1.1);
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline-info {
-        color: #0dcaf0;
-        border-color: #0dcaf0;
-    }
-    .btn-outline-info:hover {
-        background-color: #0dcaf0;
-        color: white;
-    }
-
-    .btn-outline-info:hover, 
-    .btn-outline-warning:hover, 
-    .btn-outline-danger:hover {
-        opacity: 0.9;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
-    }
-</style>
+    <!-- Incluir CSS general -->
+    <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
 @endpush
 
 @push('scripts')
-<script>
-    $(function () {
-        const table = $("#example1").DataTable({
-            pageLength: 10,
-            responsive: true,
-            lengthChange: true,
-            autoWidth: false,
-            language: {
-                emptyTable: "No hay información",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ Especialidades",
-                infoEmpty: "Mostrando 0 a 0 de 0 Especialidades",
-                infoFiltered: "(Filtrado de _MAX_ total Especialidades)",
-                lengthMenu: "Mostrar _MENU_ Especialidades",
-                loadingRecords: "Cargando...",
-                processing: "Procesando...",
-                search: "Buscador:",
-                zeroRecords: "Sin resultados encontrados",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior"
+    <script>
+        $(function () {
+            const table = $("#example1").DataTable({
+                pageLength: 10,
+                responsive: true,
+                lengthChange: true,
+                autoWidth: false,
+                language: {
+                    emptyTable: "No hay información",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ Especialidades",
+                    infoEmpty: "Mostrando 0 a 0 de 0 Especialidades",
+                    infoFiltered: "(Filtrado de _MAX_ total Especialidades)",
+                    lengthMenu: "Mostrar _MENU_ Especialidades",
+                    loadingRecords: "Cargando...",
+                    processing: "Procesando...",
+                    search: "Buscador:",
+                    zeroRecords: "Sin resultados encontrados",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    }
                 }
-            }
-        });
+            });
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
+            $(document).on('submit', '.delete-form', function (e) {
                 e.preventDefault();
+                const form = this;
+
                 Swal.fire({
-                    title: '¿Eliminar especialidad?',
+                    title: '¿Eliminar Especialidad?',
                     text: "¡Esta acción no se puede deshacer!",
                     icon: 'warning',
-                    iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
+                    iconHtml: '<i class="fas fa-heartbeat" style="color: #dc3545;"></i>',
                     showCancelButton: true,
+                    focusCancel: true,
                     confirmButtonColor: '#dc3545',
                     cancelButtonColor: '#6c757d',
                     confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
@@ -210,14 +146,13 @@
                         title: 'fw-bold text-danger',
                         confirmButton: 'btn btn-danger px-4 py-2',
                         cancelButton: 'btn btn-secondary px-4 py-2'
-                    }
+                    },
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.submit();
+                        form.submit();
                     }
                 });
             });
         });
-    });
-</script>
+    </script>
 @endpush

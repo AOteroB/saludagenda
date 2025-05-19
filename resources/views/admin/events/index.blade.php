@@ -1,79 +1,7 @@
 @extends ('layouts.admin')
 
 @section('content')
-<style>
-    .btn-outline-secondary {
-        color: #ffffff;
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        transition: all 0.3s ease;
-    }
 
-    .btn-outline-secondary:hover {
-        background: linear-gradient(135deg, #5aa9ff, #1a4673);
-        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-        transform: translateY(-2px);
-    }
-
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
-
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
-
-    .btn-primary {
-        background-color: #2d5eaf;
-        border-color: #2d5eaf;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background-color: #1f4a8c;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
-    }
-
-    @media (max-width: 576px) {
-        .stat-value {
-            font-size: 24px;
-        }
-        .card-body h5 {
-            font-size: 1rem;
-        }
-        .icon-responsive {
-            font-size: 1rem;
-        }
-    }
-
-    @media (min-width: 577px) {
-        .stat-value {
-            font-size: 32px;
-        }
-        .card-body h5 {
-            font-size: 1.25rem;
-        }
-        .icon-responsive {
-            font-size: 1.2rem;
-        }
-    }
-</style>
 <div class="container">
     <div class="row mb-4">
         <div class="col-12">
@@ -140,8 +68,8 @@
                                     <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" class="d-inline delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
-                                            <i class="bi bi-trash3"></i>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
@@ -199,13 +127,6 @@
                                 confirmButton: 'btn btn-danger px-4 py-2',
                                 cancelButton: 'btn btn-secondary px-4 py-2'
                             },
-                            buttonsStyling: true,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.submit();
@@ -218,3 +139,8 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+    <!-- Incluir CSS general -->
+    <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
+@endpush

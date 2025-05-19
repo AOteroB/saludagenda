@@ -109,197 +109,148 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
 @endsection
 
 @push('styles')
-<style>
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
+    <!-- Incluir CSS general -->
+    <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
 
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
+    <!-- Personalizado de esta vista -->
+    <style>
+        .btn-outline-warning {
+            color: #ffc107;
+            border-color: #ffc107;
+        }
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: black;
+        }
 
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
+        .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
 
-    .btn-outline-info {
-        color: #0dcaf0;
-        border-color: #0dcaf0;
-    }
-    .btn-outline-info:hover {
-        background-color: #0dcaf0;
-        color: white;
-    }
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
 
-    .btn-outline-warning {
-        color: #ffc107;
-        border-color: #ffc107;
-    }
-    .btn-outline-warning:hover {
-        background-color: #ffc107;
-        color: black;
-    }
+        .badge-danger {
+            background-color: #dc3545;
+            color: white;
+        }
 
-    .btn-outline-danger {
-        color: #dc3545;
-        border-color: #dc3545;
-    }
-    .btn-outline-danger:hover {
-        background-color: #dc3545;
-        color: white;
-    }
+        .badge-warning {
+            background-color: #ffc107;
+            color: black;
+        }
 
-    .btn-light:hover {
-        background-color: #ffffff; 
-        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px) scale(1.1);
-        transition: all 0.3s ease;
-    }
+        .badge-pink {
+            background-color: #d63384;
+            color: white;
+        }
 
-    .badge {
-        padding: 0.45em 0.6em;
-        font-size: 0.8em;
-        font-weight: 500;
-        border-radius: 0.5rem;
-    }
+        .badge-info {
+            background-color: #0dcaf0;
+            color: white;
+        }
 
-    .badge-success {
-        background-color: #28a745;
-        color: white;
-    }
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
 
-    .badge-danger {
-        background-color: #dc3545;
-        color: white;
-    }
+        .badge-purple {
+            background-color: #6f42c1;
+            color: white;
+        }
 
-    .badge-warning {
-        background-color: #ffc107;
-        color: black;
-    }
+        .badge-secondary-subtle {
+            background-color: #e2e3e5;
+            color: #6c757d;
+        }
 
-    .badge-pink {
-        background-color: #d63384;
-        color: white;
-    }
+        .badge-light {
+            background-color: #f8f9fa;
+            color: black;
+            border: 1px solid #ced4da;
+        }
 
-    .badge-info {
-        background-color: #0dcaf0;
-        color: white;
-    }
+        .badge-indigo-subtle {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
 
-    .badge-secondary {
-        background-color: #6c757d;
-        color: white;
-    }
-
-    .badge-purple {
-        background-color: #6f42c1;
-        color: white;
-    }
-
-    .badge-secondary-subtle {
-        background-color: #e2e3e5;
-        color: #6c757d;
-    }
-    .badge-light {
-        background-color: #f8f9fa;
-        color: black;
-        border: 1px solid #ced4da;
-    }
-    .badge-indigo-subtle {
-        background-color: #e0e7ff;
-        color: #4338ca;
-    }
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
-    }
-    .thead-light th {
-        background-color: #EBF4FF;
-        text-align: center;
-        color: black;
-    }
-</style>
+        .thead-light th {
+            background-color: #EBF4FF;
+            text-align: center;
+            color: black;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-<script>
-    $(function () {
-        const table = $("#example1").DataTable({
-            pageLength: 10,
-            responsive: true,
-            lengthChange: true,
-            autoWidth: false,
-            language: {
-                emptyTable: "No hay información",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ Doctores",
-                infoEmpty: "Mostrando 0 a 0 de 0 Doctores",
-                infoFiltered: "(Filtrado de _MAX_ total Doctores)",
-                lengthMenu: "Mostrar _MENU_ Doctores",
-                loadingRecords: "Cargando...",
-                processing: "Procesando...",
-                search: "Buscador:",
-                zeroRecords: "Sin resultados encontrados",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior"
+    <script>
+        $(function () {
+            const table = $("#example1").DataTable({
+                pageLength: 10,
+                responsive: true,
+                lengthChange: true,
+                autoWidth: false,
+                language: {
+                    emptyTable: "No hay información",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ Doctores",
+                    infoEmpty: "Mostrando 0 a 0 de 0 Doctores",
+                    infoFiltered: "(Filtrado de _MAX_ total Doctores)",
+                    lengthMenu: "Mostrar _MENU_ Doctores",
+                    loadingRecords: "Cargando...",
+                    processing: "Procesando...",
+                    search: "Buscador:",
+                    zeroRecords: "Sin resultados encontrados",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    }
                 }
-            }
-        });
+            });
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: '¿Eliminar Doctor?',
-                    text: "¡Esta acción no se puede deshacer!",
-                    icon: 'warning',
-                    iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
-                    showCancelButton: true,
-                    focusCancel: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
-                    cancelButtonText: 'Cancelar',
-                    customClass: {
-                        popup: 'border border-danger shadow-lg rounded-lg',
-                        title: 'fw-bold text-danger',
-                        confirmButton: 'btn btn-danger px-4 py-2',
-                        cancelButton: 'btn btn-secondary px-4 py-2'
-                    },
-                    buttonsStyling: true,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit();
-                    }
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Eliminar Doctor?',
+                        text: "¡Esta acción no se puede deshacer!",
+                        icon: 'warning',
+                        iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
+                        showCancelButton: true,
+                        focusCancel: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        customClass: {
+                            popup: 'border border-danger shadow-lg rounded-lg',
+                            title: 'fw-bold text-danger',
+                            confirmButton: 'btn btn-danger px-4 py-2',
+                            cancelButton: 'btn btn-secondary px-4 py-2'
+                        },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 @endpush

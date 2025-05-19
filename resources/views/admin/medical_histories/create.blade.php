@@ -5,7 +5,7 @@
     <div class="row justify-content-center mb-4">
         <div class="col-md-12 text-left">
             <h2 class="text-primary mb-1" style="color: #3a7bd5 !important;">
-                <i class="fas fa-user-plus me-2" style="margin-right: 10px"></i>Registro de Nuevo Historial Médico
+                <i class="fas fa-clipboard-list me-2" style="margin-right: 10px"></i>Registro de Nuevo Historial Médico
             </h2>
             <p class="text-secondary mb-0">Complete el siguiente formulario para agregar un nuevo historial médico al sistema.</p>
             <hr>
@@ -18,7 +18,7 @@
 
                 <div class="glass-card-header p-3 text-white">
                     <h5 class="mb-0">
-                        <i class="fas fa-id-card-alt me-2"></i> Datos del Usuario
+                        <i class="fas fa-file-medical me-2"></i> Datos del Paciente
                     </h5>
                 </div>
 
@@ -29,7 +29,7 @@
 
                         {{-- Paciente --}}
                         <div class="mb-3">
-                            <label for="patient_id" class="form-label fw-semibold text-dark">Paciente</label>
+                            <label for="patient_id" class="form-label fw-semibold text-dark">Nombre y Apellidos</label>
                             <select name="patient_id" id="patient_id" class="form-control bg-light bg-opacity-25 text-dark" required>
                                 <option value="">Seleccione un paciente</option>
                                 @foreach($patients as $patient)

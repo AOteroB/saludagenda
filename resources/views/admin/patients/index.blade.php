@@ -85,71 +85,18 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
 @endsection
 
 @push('styles')
-<style>
-    .glass-card {
-        background: rgba(252, 252, 252, 0.6);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-    }
-
-    .glass-card-header {
-        background: linear-gradient(135deg, #4a90e2, #193c5f);
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .glass-card-body {
-        background: rgba(255, 255, 255);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-    }
-
-    .badge {
-        padding: 0.45em 0.6em;
-        font-size: 0.8em;
-        font-weight: 500;
-        border-radius: 0.5rem;
-    }
-
-    .btn-light {
-        color: #193c5f !important; 
-    }
-
-    .btn-light:hover {
-        background-color: #ffffff; 
-        box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px) scale(1.1);
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline-info {
-        color: #0dcaf0;
-        border-color: #0dcaf0;
-    }
-    .btn-outline-info:hover {
-        background-color: #0dcaf0;
-        color: white;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(93, 165, 255, 0.05);
-    }
-</style>
+    <!-- Incluir CSS general -->
+    <link rel="stylesheet" href="{{ url('dist/css/index.css') }}">
 @endpush
 
 @push('scripts')
-<script>
+    <script>
     $(function () {
         const table = $("#example1").DataTable({
             pageLength: 10,
@@ -175,30 +122,31 @@
             }
         });
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: '¿Eliminar paciente?',
-                    text: "¡Esta acción no se puede deshacer!",
-                    icon: 'warning',
-                    iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
-                    cancelButtonText: 'Cancelar',
-                    customClass: {
-                        popup: 'border border-danger shadow-lg rounded-lg',
-                        title: 'fw-bold text-danger',
-                        confirmButton: 'btn btn-danger px-4 py-2',
-                        cancelButton: 'btn btn-secondary px-4 py-2'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit();
-                    }
-                });
+        $(document).on('submit', '.delete-form', function (e) {
+            e.preventDefault();
+            const form = this;
+
+            Swal.fire({
+                title: '¿Eliminar Paciente?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'warning',
+                iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
+                showCancelButton: true,
+                focusCancel: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    popup: 'border border-danger shadow-lg rounded-lg',
+                    title: 'fw-bold text-danger',
+                    confirmButton: 'btn btn-danger px-4 py-2',
+                    cancelButton: 'btn btn-secondary px-4 py-2'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
             });
         });
     });

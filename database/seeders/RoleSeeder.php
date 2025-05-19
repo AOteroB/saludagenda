@@ -51,7 +51,7 @@ class RoleSeeder extends Seeder
 
             //Permisos para historiales médicos
             'admin.medical_histories.index', 'admin.medical_histories.create', 'admin.medical_histories.store', 'admin.medical_histories.show',
-            'admin.medical_histories.edit', 'admin.medical_histories.update', 'admin.medical_histories.destroy',
+            'admin.medical_histories.edit', 'admin.medical_histories.update', 'admin.medical_histories.destroy', 'admin.medical_histories.pdf',
         ];
 
         foreach ($permissions as $permission) {
@@ -77,7 +77,7 @@ class RoleSeeder extends Seeder
             'admin.appointments.index', 'admin.appointments.show',
             'admin.medical_histories.index', 'admin.medical_histories.create', 'admin.medical_histories.store', 
             'admin.medical_histories.show', 'admin.medical_histories.edit', 'admin.medical_histories.update', 
-            'admin.medical_histories.destroy',
+            'admin.medical_histories.destroy', 'admin.medical_histories.pdf',
         ])->get();
         $doctor->syncPermissions($doctorPermissions);
 
@@ -88,7 +88,7 @@ class RoleSeeder extends Seeder
             'admin.specialties.index','admin.specialties.show', 
             'admin.schedules.index', 'admin.schedules.show',
             'admin.appointments.create', 'admin.appointments.show', 'admin.appointments.destroy',
-            'admin.medical_histories.index', 'admin.medical_histories.show'
+            'admin.medical_histories.index', 'admin.medical_histories.show', 'admin.medical_histories.pdf'
             ])->get();
         $patient->syncPermissions($patientPermissions);
     }
