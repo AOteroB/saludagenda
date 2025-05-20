@@ -117,7 +117,7 @@
 @endpush
 
 @push('scripts')
-<script>
+    <script>
     $(function () {
         const table = $("#example1").DataTable({
             pageLength: 10,
@@ -126,10 +126,10 @@
             autoWidth: false,
             language: {
                 emptyTable: "No hay información",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
-                infoEmpty: "Mostrando 0 a 0 de 0 Usuarios",
-                infoFiltered: "(Filtrado de _MAX_ total Usuarios)",
-                lengthMenu: "Mostrar _MENU_ Usuarios",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ Pacientes",
+                infoEmpty: "Mostrando 0 a 0 de 0 Pacientes",
+                infoFiltered: "(Filtrado de _MAX_ total Pacientes)",
+                lengthMenu: "Mostrar _MENU_ Pacientes",
                 loadingRecords: "Cargando...",
                 processing: "Procesando...",
                 search: "Buscador:",
@@ -143,35 +143,31 @@
             }
         });
 
-        $('#filter-role').on('change', function () {
-            const value = $(this).val();
-            table.column(3).search(value).draw();
-        });
+        $(document).on('submit', '.delete-form', function (e) {
+            e.preventDefault();
+            const form = this;
 
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: '¿Eliminar usuario?',
-                    text: "¡Esta acción no se puede deshacer!",
-                    icon: 'warning',
-                    iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
-                    cancelButtonText: 'Cancelar',
-                    customClass: {
-                        popup: 'border border-danger shadow-lg rounded-lg',
-                        title: 'fw-bold text-danger',
-                        confirmButton: 'btn btn-danger px-4 py-2',
-                        cancelButton: 'btn btn-secondary px-4 py-2'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit();
-                    }
-                });
+            Swal.fire({
+                title: '¿Eliminar Usuario?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'warning',
+                iconHtml: '<i class="fas fa-user-times" style="color: #dc3545;"></i>',
+                showCancelButton: true,
+                focusCancel: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    popup: 'border border-danger shadow-lg rounded-lg',
+                    title: 'fw-bold text-danger',
+                    confirmButton: 'btn btn-danger px-4 py-2',
+                    cancelButton: 'btn btn-secondary px-4 py-2'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
             });
         });
     });
