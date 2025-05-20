@@ -56,6 +56,9 @@ class UserController extends Controller
         $user->password = Hash::make($request->password); // Encriptar la contraseña
         $user->save();
 
+        // Asignamos el rol admin
+        $user->assignRole('admin');
+        
         return redirect()->route('admin.user.index') 
             -> with('message','Usuario registrado correctamente en el sistema.')
             -> with('icon','success');
@@ -175,7 +178,7 @@ class UserController extends Controller
 
         $rules = [
             'name' => 'required|max:250',
-            'email' => 'required|email|max:250|unique:users,email,' . $user->id,
+            'email' => 'required|email|max:191|unique:users,email,' . $user->id,
         ];
 
         if ($request->filled('password')) {

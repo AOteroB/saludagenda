@@ -224,9 +224,9 @@
                 }
             });
 
-            document.querySelectorAll('.delete-form').forEach(form => {
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
+            $(document).on('submit', '.delete-form', function (e) {
+                e.preventDefault();
+                const form = this;
                     Swal.fire({
                         title: '¿Eliminar Doctor?',
                         text: "¡Esta acción no se puede deshacer!",
@@ -251,6 +251,5 @@
                     });
                 });
             });
-        });
     </script>
 @endpush

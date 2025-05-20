@@ -142,6 +142,11 @@
                 }
             }
         });
+        
+        $('#filter-role').on('change', function () {
+            const value = $(this).val();
+            table.column(3).search(value).draw();
+        });
 
         $(document).on('submit', '.delete-form', function (e) {
             e.preventDefault();

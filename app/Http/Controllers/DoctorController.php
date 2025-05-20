@@ -48,7 +48,7 @@ class DoctorController extends Controller
             'license_number' => 'required|string|unique:doctors',
             'specialty_id' => 'required|exists:specialties,id',
             'status' => 'required|in:activo,inactivo',
-            'email' => 'required|max:250|unique:users',
+            'email' => 'required|max:191|unique:users',
             'password' => [
                 'required',
                 'max:250',
@@ -124,7 +124,7 @@ class DoctorController extends Controller
             'license_number' => 'required|string|unique:doctors,license_number,' . $doctor->id,
             'specialty_id' => 'required|exists:specialties,id',
             'status' => 'required|in:activo,inactivo',
-            'email' => 'required|max:250|unique:users,email,' . $doctor->user->id,
+            'email' => 'required|max:191|unique:users,email,' . $doctor->user->id,
             'password' => [
                 'nullable', // La contraseña es opcional al actualizar
                 'max:250',

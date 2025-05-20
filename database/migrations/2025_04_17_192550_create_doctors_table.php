@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('last_name', 150);
             $table->string('phone', 15)->nullable();
-            $table->string('email', 255)->nullable()->unique();
+            $table->string('email', 191)->nullable()->unique();
             $table->string('license_number', 50)->nullable();
             $table->enum('status', ['activo', 'inactivo'])->default('activo');
 

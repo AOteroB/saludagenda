@@ -51,22 +51,13 @@
                             <div class="col-md-4 mb-3">
                                 <label for="email" class="form-label fw-semibold text-dark">Correo Electrónico</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control bg-light bg-opacity-25 text-dark" required>
-                                @error('email')
-                                    <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
-                                        <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i> <span>{{ $message }}</span>
-                                    </div>
-                                @enderror
+
                             </div>
 
                             {{-- Contraseña --}}
                             <div class="col-md-4 mb-3">
                                 <label for="password" class="form-label fw-semibold text-dark">Contraseña</label>
                                 <input type="password" name="password" id="password" class="form-control bg-light bg-opacity-25 text-dark" required>
-                                @error('password')
-                                    <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
-                                        <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i> <span>{{ $message }}</span>
-                                    </div>
-                                @enderror
                             </div>
 
                             {{-- Confirmar Contraseña --}}
@@ -76,6 +67,24 @@
                             </div>
                         </div>
 
+                        {{-- Mostrar Errores --}}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                @error('email')
+                                    <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
+                                        <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i> <span>{{ $message }}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-md-8 mb-3">
+                            @error('password')
+                                <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
+                                    <i class="bi bi-exclamation-triangle-fill me-2" style="margin-right: 10px"></i> <span>{{ $message }}</span>
+                                </div>
+                            @enderror
+                            </div>
+                        </div>
+                        
                         <div class="row">
                             {{-- Nº de Licencia --}}
                             <div class="col-md-4 mb-3">
