@@ -48,7 +48,7 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-end">
         <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <img src="assets/img/logo1.png" alt="">
+          <img src="assets/img/logo1.png" alt="Logo">
           <h1 class="sitename">Salud Agenda</h1>
         </a>
 

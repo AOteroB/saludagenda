@@ -36,8 +36,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');});
 
-Route::post('/user/{user}/assign-role', [UserController::class, 'assignRole'])->name('user.assignRole');
-
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index')->middleware('auth');
 
 Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'reports'])

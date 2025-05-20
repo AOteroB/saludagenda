@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -24,6 +25,16 @@ class ResetPasswordController extends Controller
      * Where to redirect users after resetting their password.
      *
      * @var string
-     */
-    protected $redirectTo = '/home';
+     */ 
+    protected $redirectTo = '/admin';
+
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return redirect('/admin')->with([
+            'message' => 'Contraseña cambiada con éxito',
+            'icon' => 'success',
+            'title' => '¡Listo!',
+            'timer' => 3000
+        ]);
+    }
 }

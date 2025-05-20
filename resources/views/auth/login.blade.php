@@ -98,7 +98,7 @@
             <input type="checkbox" name="remember" class="form-checkbox">
             <span class="ml-2">Recuérdame</span>
           </label>
-          <a href="#" class="text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
+          <a href="{{ route('password.request') }}" class="text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
         </div>
 
         {{-- Botón --}}

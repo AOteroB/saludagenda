@@ -1,47 +1,116 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restablecer Contraseña | SaludAgenda</title>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+  {{-- Fuente e iconos --}}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+  {{-- Estilos personalizados --}}
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #C4FFFF;
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+    input[type="email"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+    input[type="email"]:focus {
+      border-color: #3FBBC0;
+      box-shadow: 0 0 0 2px #C4FFFF;
+    }
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    @keyframes slideFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    .slide-fade-in {
+      animation: slideFadeIn 1s ease forwards;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-gray-800">
+
+  <div
+    class="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col sm:flex-row slide-fade-in">
+
+    {{-- Lado Izquierdo --}}
+    <div
+      class="hidden sm:flex w-1/2 bg-[#3FBBC0] text-white flex-col justify-center items-center p-10 animate-slide-in-left">
+      <h2 class="text-4xl font-bold mb-4">¿Olvidaste tu contraseña?</h2>
+      <p class="text-sm text-center">No te preocupes, ingresa tu correo y te enviaremos un enlace para restablecerla.</p>
     </div>
-</div>
-@endsection
+
+    {{-- Lado Derecho --}}
+    <div class="w-full sm:w-1/2 p-10">
+      <h3 class="text-2xl font-semibold mb-6 text-[#3FBBC0] text-center">Restablecer contraseña</h3>
+
+      {{-- Mensaje de estado --}}
+      @if (session('status'))
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
+        {{ session('status') }}
+      </div>
+      @endif
+
+      <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
+        @csrf
+
+        {{-- Email --}}
+        <div>
+          <label for="email" class="block text-sm font-medium">Correo electrónico</label>
+          <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus />
+          @error('email')
+          <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+          @enderror
+        </div>
+
+        {{-- Botón --}}
+        <button type="submit"
+          class="w-full bg-[#3FBBC0] hover:bg-[#3FBBC0] hover:shadow-lg text-white font-semibold py-3 rounded-xl transition-transform transform hover:scale-105 duration-300">
+          Enviar enlace para restablecer
+        </button>
+      </form>
+
+      {{-- Link al login --}}
+      <p class="mt-6 text-center text-sm">
+        ¿Recordaste tu contraseña?
+        <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Inicia sesión</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
