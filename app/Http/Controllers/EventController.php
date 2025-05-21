@@ -6,6 +6,9 @@ use App\Models\Event;
 use App\Models\Specialty;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Mail\AppointmentConfirmation;
+use App\Mail\AppointmentCancellation;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -99,6 +102,9 @@ class EventController extends Controller
         $event->doctor_id = $doctorAssigned->id;
         $event->specialty_id = $specialty->id;
         $event->save();
+
+        // Enviar al usuario mensaje de confirmación de cita
+        Mail::to($event->user->email)->send(new AppointmentConfirmation($event));
     
         // Redirigir al usuario con mensaje de éxito
         return redirect()->route('admin.index')
@@ -152,6 +158,9 @@ class EventController extends Controller
     public function destroy($id)
     {
         $event = Event::findOrFail($id);
+
+        // Enviar email de cancelación al paciente
+        Mail::to($event->user->email)->send(new AppointmentCancellation($event));
 
         //Eliminar la cita
         $event->delete();

@@ -176,13 +176,6 @@
                                 confirmButton: 'btn btn-danger px-4 py-2',
                                 cancelButton: 'btn btn-secondary px-4 py-2'
                             },
-                            buttonsStyling: true,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.submit();
