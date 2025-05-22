@@ -431,12 +431,19 @@
 
                         <!-- Sección: Cuenta -->
                         <li class="nav-header glass-header">CUENTA</li>
-        
+                            
+                        <li class="nav-item">
+                            <a href="{{ route('profile.edit') }}" class="nav-link text-white">
+                                <i class="fas fa-user-edit nav-icon text-white"></i>
+                                <p>Editar perfil</i></p>
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a href=""
                                class="nav-link text-white"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
+                                <i class="nav-icon fas fa-sign-out-alt text-white"></i>
                                 <p>Cerrar Sesión</p>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
