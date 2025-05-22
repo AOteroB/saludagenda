@@ -79,17 +79,23 @@
         Historial Clínico Completo del Paciente
     </h2>
 
-    <p style="text-align: center; font-size: 11pt;">
-        <strong>{{ $patient->name }} {{ $patient->last_name }}</strong> - DNI: {{ $patient->dni }}
+    <p style="text-align: left; font-size: 11pt;">
+        <strong>{{ $patient->name }} {{ $patient->last_name }}</strong> - DNI: {{ $patient->dni }} - Nº Tarjeta Sanitaria: {{ $patient->health_card_number ?? 'N/A' }}
     </p>
 
     @forelse ($patient->medicalHistories as $history)
-        <h3 class="section-title">Consulta del {{ $history->date }}</h3>
+        <h3 class="section-title">Consulta del {{ \Carbon\Carbon::parse($history->date)->locale('es')->translatedFormat('d \d\e F \d\e Y') }}
+            - ({{ $history->doctor->specialty->name }})
+        </h3>
         <table class="styled-table">
             <tbody>
                 <tr>
                     <th>Médico</th>
-                    <td>Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }} ({{ $history->doctor->specialty->name }})</td>
+                    <td>Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }}</td>
+                </tr>
+                <tr>
+                    <th>Motivo de Consulta</th>
+                    <td>{{ $history->symptoms }}</td>
                 </tr>
                 <tr>
                     <th>Diagnóstico</th>

@@ -148,9 +148,10 @@ class MedicalHistoryController extends Controller
     public function pdfSingle($id)
     {
         $history = MedicalHistory::with(['doctor.specialty', 'patient'])->findOrFail($id);
+        $patient = Patient::with(['medicalHistories.doctor.specialty'])->findOrFail($id);
 
         // Cargar la vista de impresión de un solo historial
-        $pdf = \PDF::loadView('admin.medical_histories.pdf_single', compact('history'));
+        $pdf = \PDF::loadView('admin.medical_histories.pdf_single', compact('history', 'patient'));
         
         // Incluir pie de página y numeración
         $dompdf = $pdf->getDomPDF();

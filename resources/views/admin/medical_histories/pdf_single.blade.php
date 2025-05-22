@@ -79,19 +79,23 @@
         Historial Médico Individual
     </h2>
 
+    <p style="text-align: left; font-size: 11pt;">
+        <strong>{{ $patient->name }} {{ $patient->last_name }}</strong> - DNI: {{ $patient->dni }} - Nº Tarjeta Sanitaria: {{ $patient->health_card_number ?? 'N/A' }}
+    </p>
+
+    <h3 class="section-title">Consulta del {{ \Carbon\Carbon::parse($history->date)->locale('es')->translatedFormat('d \d\e F \d\e Y') }}
+        - ({{ $history->doctor->specialty->name }})
+    </h3>
+    
     <table class="styled-table mb-4">
         <tbody>
             <tr>
-                <th>Paciente</th>
-                <td>{{ $history->patient->name }} {{ $history->patient->last_name }}</td>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <td>{{ $history->date }}</td>
-            </tr>
-            <tr>
                 <th>Médico</th>
-                <td>Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }} ({{ $history->doctor->specialty->name }})</td>
+                <td>Dr. {{ $history->doctor->name }} {{ $history->doctor->last_name }}</td>
+            </tr>
+            <tr>
+                <th>Motivo de Consulta</th>
+                <td>{{ $history->symptoms }}</td>
             </tr>
             <tr>
                 <th>Diagnóstico</th>

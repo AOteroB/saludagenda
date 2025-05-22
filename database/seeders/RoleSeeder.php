@@ -92,7 +92,7 @@ class RoleSeeder extends Seeder
             'admin.index',
             'admin.doctors.index', 
             'admin.specialties.index','admin.specialties.show', 
-            'admin.schedules.index', 'admin.schedules.show',
+            'admin.schedules.index',
             'admin.appointments.create', 'admin.appointments.show', 'admin.appointments.destroy',
             'admin.medical_histories.index', 'admin.medical_histories.show', 'admin.medical_histories.pdf', 
             'profile.edit', 'profile.update',

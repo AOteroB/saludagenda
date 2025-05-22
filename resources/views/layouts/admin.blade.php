@@ -153,6 +153,20 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        /* Cuando el sidebar está contraído */
+        .sidebar-mini.sidebar-collapse .main-sidebar .brand-link {
+            justify-content: center !important;
+            text-align: center;
+        }
+
+        .sidebar-mini.sidebar-collapse .main-sidebar .brand-link img {
+            margin: 0 auto;
+            display: block;
+        }
+
+        .sidebar-mini.sidebar-collapse .main-sidebar .brand-link .brand-text {
+            display: none;
+        }
     </style>
 </head>
 
@@ -254,7 +268,7 @@
         <!-- Contenedor lateral (sidebar) -->
         <aside class="main-sidebar glass-sidebar elevation-4" style="padding-top: 0px">
             <!-- Logo de la marca -->
-            <a href="{{ route('admin.index') }}" class="brand-link d-flex align-items-center glass-logo">
+            <a href="{{ route('admin.index') }}" class="brand-link d-flex align-items-center justify-content-start glass-logo">
                 <img src="{{ url('dist/img/Logo.png') }}" alt="Logo" style="width: 65px; height: 65px;">
                 <span class="brand-text fw-bold">SALUD AGENDA</span>
             </a>
@@ -383,9 +397,17 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.schedules.index') }}" class="nav-link {{ request()->routeIs('admin.schedules.index') ? 'active' : '' }}">
                                         <i class="fas fa-calendar-alt nav-icon"></i>
-                                        <p>Listado</p>
+                                        <p>Calendario</p>
                                     </a>
                                 </li>
+                                @can('admin.schedules.show')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.schedules.show') }}" class="nav-link {{ request()->routeIs('admin.schedules.show') ? 'active' : '' }}">
+                                            <i class="fas fa-calendar-day nav-icon"></i>
+                                            <p>Doctores</p>
+                                        </a>
+                                    </li>
+                                @endcan
                                 @can('admin.schedules.create')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.schedules.create') }}" class="nav-link {{ request()->routeIs('admin.schedules.create') ? 'active' : '' }}">
@@ -545,14 +567,43 @@
 
     <!-- Colapsar el sidebar automáticamente en tablets (ancho entre 768px y 991px) 
     para evitar que bloquee la navbar y el contenido principal -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (window.innerWidth >= 768 && window.innerWidth <= 991) {
-                document.body.classList.add("sidebar-collapse");
-            }
-        });
-    </script>
-    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const width = window.innerWidth;
+        const sidebar = document.querySelector('.main-sidebar');
+
+        // Forzar colapso en resoluciones medianas
+        if (width >= 768 && width <= 1280) {
+            document.body.classList.add("sidebar-collapse");
+        }
+
+        // Detectar si el sidebar está visualmente colapsado (seguro y dinámico)
+        const isSidebarCollapsed = document.body.classList.contains('sidebar-collapse') || (sidebar && sidebar.offsetWidth < 100);
+
+        // Aplica solo si el menú está colapsado o en pantallas pequeñas
+        if (width < 768 || isSidebarCollapsed) {
+            // Solo interceptamos enlaces que ABREN submenús
+            $('.has-treeview > .nav-link').on('click', function (e) {
+                const $parent = $(this).closest('.has-treeview');
+
+                // Previene que '#' provoque scroll u otros errores
+                e.preventDefault();
+
+                if ($parent.hasClass('menu-open')) {
+                    $parent.removeClass('menu-open');
+                    $parent.children('.nav-treeview').slideUp();
+                } else {
+                    $('.has-treeview').removeClass('menu-open').children('.nav-treeview').slideUp();
+                    $parent.addClass('menu-open');
+                    $parent.children('.nav-treeview').slideDown();
+                }
+            });
+        }
+    });
+</script>
+
+
+
 </body>
 
 </html>

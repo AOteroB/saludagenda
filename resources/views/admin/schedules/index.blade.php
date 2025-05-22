@@ -4,75 +4,12 @@
       
     <div class="row mb-4">
         <div class="col-12">
-            <h2 class="text-black"><i class="bi bi-calendar-check me-2"></i> Gestión de Horarios</h2>
-            <p class="text-muted">Consulta, administra y exporta los horarios de los doctores registrados en el sistema.</p>
+            <h2 class="text-black"><i class="bi bi-calendar-check me-2"></i> Listado de Horarios</h2>
+            <p class="text-muted">Consulta los horarios de los doctores registrados en el sistema.</p>
             <hr>
         </div>
     </div>
-    @can('admin.user.index')
-        <div class="glass-card mb-4 border">
-            <div class="glass-card-header p-3 text-white">
-                <div class="d-flex justify-content-between align-items-center" style="margin: 5px">
-                    <h5 class="mb-0">Listado de Horarios de Atención</h5>
-                    <a href="{{ route('admin.schedules.create') }}" class="btn btn-sm btn-light">
-                        <i class="fas fa-calendar-plus me-1"></i> Crear Nuevo
-                    </a>
-                </div>
-            </div>
-            <div class="glass-card-body p-4">
 
-                @if ($success = Session::get('success'))
-                    <script>
-                        Swal.fire({
-                            position: "top",
-                            icon: "success",
-                            title: '¡Horario creado!',
-                            text: '{{ $success }}',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            background: '#f0fdf4',
-                            color: '#166534',
-                            iconColor: '#22c55e'
-                        });
-                    </script>
-                @endif
-
-                <div class="table-responsive">
-                    <table id="example1" class="table table-hover text-center align-middle">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Doctor</th>
-                                <th>Especialidad</th>
-                                <th>Día</th>
-                                <th>Horario</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($schedules as $schedule)
-                                <tr>
-                                    <td>Dr. {{ $schedule->doctor->name }} {{ $schedule->doctor->last_name }}</td>
-                                    <td>{{ $schedule->doctor->specialty->name ?? 'Sin especialidad' }}</td>
-                                    <td>{{ nombreDia($schedule->day_of_week) }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.schedules.destroy', $schedule->id) }}" method="POST" class="d-inline delete-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>   
-    @endcan
-    
     <div class="col-md-12">
         <div class="glass-card mb-4 border">
             <div class="glass-card-header p-3 text-white">
@@ -232,62 +169,4 @@
             border-color: #cdcdcd;
         }
     </style>
-@endpush
-
-@push('scripts')
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                pageLength: 10,
-                responsive: true,
-                lengthChange: true,
-                autoWidth: false,
-                language: {
-                    emptyTable: "No hay información",
-                    info: "Mostrando _START_ a _END_ de _TOTAL_ Horarios",
-                    infoEmpty: "Mostrando 0 a 0 de 0 Horarios",
-                    infoFiltered: "(Filtrado de _MAX_ total Horarios)",
-                    lengthMenu: "Mostrar _MENU_ Horarios",
-                    loadingRecords: "Cargando...",
-                    processing: "Procesando...",
-                    search: "Buscador:",
-                    zeroRecords: "Sin resultados encontrados",
-                    paginate: {
-                        first: "Primero",
-                        last: "Último",
-                        next: "Siguiente",
-                        previous: "Anterior"
-                    }
-                }
-            });
-
-            document.querySelectorAll('.delete-form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    Swal.fire({
-                        title: '¿Eliminar horario?',
-                        text: "¡Esta acción no se puede deshacer!",
-                        icon: 'warning',
-                        iconHtml: '<i class="fas fa-calendar-times" style="color: #dc3545;"></i>',
-                        showCancelButton: true,
-                        focusCancel: true,
-                        confirmButtonColor: '#dc3545',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Eliminar',
-                        cancelButtonText: 'Cancelar',
-                        customClass: {
-                            popup: 'border border-danger shadow-lg rounded-lg',
-                            title: 'fw-bold text-danger',
-                            confirmButton: 'btn btn-danger px-4 py-2',
-                            cancelButton: 'btn btn-secondary px-4 py-2'
-                        },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.submit();
-                        }
-                    });
-                });
-            });
-        });
-    </script>
 @endpush

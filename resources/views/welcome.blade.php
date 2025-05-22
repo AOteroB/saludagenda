@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="{{ url('dist/img/Logo.png') }}" rel="icon">
+  <link href="{{ url('dist/img/LogoIndex.png') }}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -47,8 +47,8 @@
     <div class="branding d-flex align-items-center">
 
       <div class="container position-relative d-flex align-items-center justify-content-end">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <img src="assets/img/Logotipo.png" alt="Logo">
+        <a href="#hero" class="logo d-flex align-items-center me-auto">
+          <img src="assets/img/LogoIndex.png" alt="Logo">
           <h1 class="sitename">Salud Agenda</h1>
         </a>
 
@@ -401,7 +401,7 @@
                         <p>Desde recién nacidos hasta adolescentes, ofrecemos seguimiento y prevención de enfermedades infantiles con un enfoque cálido y profesional.</p>
                       </div>
                       <div class="col-lg-4 text-center">
-                        <img src="assets/img/departments-4.jpg" alt="" class="img-fluid">
+                        <img src="assets/img/departments-6.jpg" alt="" class="img-fluid">
                       </div>
                     </div>
                   </div>
@@ -494,7 +494,8 @@
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-6 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="#hero" class="logo d-flex align-items-center">
+            <img src="assets/img/LogoFooter.png" alt="Logo">
             <span class="sitename">Salud Agenda</span>
           </a>
           <div class="footer-contact pt-3">

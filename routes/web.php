@@ -196,7 +196,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/schedules/create', [ScheduleController::class, 'store'])
         ->middleware('can:admin.schedules.store')->name('admin.schedules.store');
 
-    Route::get('/admin/schedules/{id}', [ScheduleController::class, 'show'])
+    Route::get('/admin/schedules/show', [ScheduleController::class, 'show'])
         ->middleware('can:admin.schedules.show')->name('admin.schedules.show');
         
     Route::delete('/admin/schedules/{id}', [ScheduleController::class, 'destroy'])
