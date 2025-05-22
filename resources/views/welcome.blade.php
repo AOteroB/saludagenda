@@ -48,7 +48,7 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-end">
         <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <img src="assets/img/logo1.png" alt="Logo">
+          <img src="assets/img/Logotipo.png" alt="Logo">
           <h1 class="sitename">Salud Agenda</h1>
         </a>
 
@@ -56,8 +56,7 @@
           <ul>
             <li><a href="#hero" class="active">Inicio</a></li>
             <li><a href="#services">Servicios</a></li>
-            <li><a href="#departments">Especialidades</a></li>
-            <li><a href="#doctors">Doctores</a></li>
+            <li><a href="#specialties">Áreas Médicas</a></li>
             <li><a href="#contact">Contacto</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -297,7 +296,7 @@
       <div class="container">
 
         <div class="row justify-content-around gy-4">
-          <div class="features-image col-lg-6" data-aos="fade-up" data-aos-delay="100"><img src="assets/img/features.jpg" alt=""></div>
+          <div class="features-image col-lg-6" data-aos="fade-up" data-aos-delay="100"><img src="assets/img/about.jpg" alt=""></div>
 
           <div class="col-lg-5 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
             <h3>¿Por qué elegir nuestra plataforma médica?</h3>
@@ -328,22 +327,19 @@
             </div><!-- End Icon Box -->
 
             <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="600">
-              <i class="fa-solid fa-lungs flex-shrink-0"></i>
+              <i class="fa-solid fa-user-shield flex-shrink-0"></i>
               <div>
-                <h4><a href="" class="stretched-link">Tride clov</a></h4>
-                <p>Est voluptatem labore deleniti quis a delectus et. Saepe dolorem libero sit non aspernatur odit amet. Et eligendi</p>
+                <h4><a href="#" class="stretched-link">Seguridad y privacidad de tus datos</a></h4>
+                <p>Tu información médica está protegida bajo estrictos estándares de seguridad y confidencialidad digital.</p>
               </div>
             </div><!-- End Icon Box -->
-
           </div>
         </div>
-
       </div>
-
     </section><!-- /Features Section -->
 
     <!-- Tabs Section -->
-    <section id="departments" class="tabs section">
+    <section id="specialties" class="tabs section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -377,7 +373,7 @@
                     <a class="nav-link" data-bs-toggle="tab" href="#tab-traumatologia">Traumatología y Ortopedia</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="">Ver más</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab-mas">Ver más</a>
                   </li>
                 </ul>
               </div>
@@ -405,7 +401,7 @@
                         <p>Desde recién nacidos hasta adolescentes, ofrecemos seguimiento y prevención de enfermedades infantiles con un enfoque cálido y profesional.</p>
                       </div>
                       <div class="col-lg-4 text-center">
-                        <img src="assets/img/departments-2.jpg" alt="" class="img-fluid">
+                        <img src="assets/img/departments-4.jpg" alt="" class="img-fluid">
                       </div>
                     </div>
                   </div>
@@ -431,7 +427,7 @@
                         <p>Abordamos desde condiciones comunes como el acné hasta enfermedades dermatológicas complejas con un enfoque estético y médico.</p>
                       </div>
                       <div class="col-lg-4 text-center">
-                        <img src="assets/img/departments-4.jpg" alt="" class="img-fluid">
+                        <img src="assets/img/gallery-3.jpg" alt="" class="img-fluid">
                       </div>
                     </div>
                   </div>
@@ -457,111 +453,40 @@
                         <p>Atención integral en lesiones musculoesqueléticas, fracturas, artrosis y rehabilitación postquirúrgica con un equipo altamente especializado.</p>
                       </div>
                       <div class="col-lg-4 text-center">
-                        <img src="assets/img/departments-6.jpg" alt="" class="img-fluid">
+                        <img src="assets/img/gallery-7.jpg" alt="" class="img-fluid">
                       </div>
                     </div>
                   </div>
-              
+
+                  <div class="tab-pane" id="tab-mas">
+                    <div class="row">
+                      <div class="col-lg-8 details">
+                        <h3>Otras Especialidades</h3>
+                        <p class="fst-italic">Conoce todas las demás especialidades disponibles en nuestro centro.</p>
+                        <ul>
+                          <li><strong>Ginecología y Obstetricia:</strong> Revisiones, embarazos, control hormonal, etc.</li>
+                          <li><strong>Otorrinolaringología (ORL):</strong> Oídos, nariz y garganta.</li>
+                          <li><strong>Endocrinología:</strong> Hormonas, tiroides, diabetes, obesidad.</li>
+                          <li><strong>Neurología:</strong> Sistema nervioso, dolores de cabeza, epilepsia, etc.</li>
+                          <li><strong>Urología:</strong> Sistema urinario masculino y femenino, próstata.</li>
+                          <li><strong>Alergología:</strong> Diagnóstico y tratamiento de alergias.</li>
+                          <li><strong>Neumología:</strong> Pulmones, asma, apnea del sueño, EPOC.</li>
+                          <li><strong>Hematología:</strong> Enfermedades de la sangre, anemias, leucemias.</li>
+                          <li><strong>Oncología:</strong> Cáncer y tratamiento oncológico.</li>
+                          <li><strong>Nefrología:</strong> Enfermedades renales.</li>
+                          <li><strong>Nutrición y Dietética:</strong> Alimentación equilibrada y seguimiento nutricional.</li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-4 text-center">
+                        <img src="assets/img/departments-2.jpg" alt="" class="img-fluid">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-        </div>
-
-      </div>
-
+            </div>
+          </div>
     </section><!-- /Tabs Section -->
-
-
-    <!-- Doctors Section -->
-    <section id="doctors" class="doctors section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Doctores</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Medical Officer</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Anesthesiologist</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cardiology</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/doctors/doctors-4.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Neurosurgeon</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Doctors Section -->
   </main>
 
   <footer id="footer" class="footer light-background" style="background-color: #c4ffff;">
@@ -588,21 +513,21 @@
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Enlaces útiles</h4>
           <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Sobre nosotros</a></li>
-            <li><a href="#">Especialidades</a></li>
-            <li><a href="#">Términos y condiciones</a></li>
-            <li><a href="#">Política de privacidad</a></li>
+            <li><a href="#hero">Inicio</a></li>
+            <li><a>Sobre nosotros</a></li>
+            <li><a href="#specialties">Especialidades</a></li>
+            <li><a>Términos y condiciones</a></li>
+            <li><a>Política de privacidad</a></li>
           </ul>
         </div>
   
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Atención al paciente</h4>
           <ul>
-            <li><a href="#">Pedir cita</a></li>
-            <li><a href="#">Preguntas frecuentes</a></li>
-            <li><a href="#">Soporte</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a href="{{ route('login') }}">Pedir cita</a></li>
+            <li><a>Preguntas frecuentes</a></li>
+            <li><a>Soporte</a></li>
+            <li><a>Contacto</a></li>
           </ul>
         </div>
       </div>

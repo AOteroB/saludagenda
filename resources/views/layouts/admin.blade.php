@@ -437,7 +437,7 @@
                                class="nav-link text-white"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
-                                <p class="text-danger">Cerrar Sesión</p>
+                                <p>Cerrar Sesión</p>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -506,13 +506,9 @@
         <!-- /.control-sidebar -->
 
         <!-- Pie de página (footer) -->
-        <footer class="main-footer">
-            <!-- Información adicional a la derecha (solo en pantallas medianas o grandes) -->
-            <div class="float-right d-none d-sm-inline">
-
-            </div>
+        <footer class="main-footer text-center">
             <!-- Información por defecto a la izquierda -->
-            <strong>Copyright &copy; 2025. <a>Ángel Otero Burgos</a>.</strong> Todos los derechos reservados.
+            <p>© <strong>Salud Agenda</strong> - Todos los derechos reservados. Desarrollado por Ángel Otero Burgos</p></p>
         </footer>
     </div>
     
