@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="password" class="form-label fw-semibold text-dark">Contraseña</label>
-                                <input type="password" name="password" id="password" class="form-control bg-light bg-opacity-25 text-dark">
+                                <input type="password" name="password" id="password" placeholder="••••••••" class="form-control bg-light bg-opacity-25 text-dark">
                                 <small class="form-text text-muted">Déjala vacía si no deseas cambiarla.</small>
                                 @if ($errors->has('password'))
                                     <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="password_confirmation" class="form-label fw-semibold text-dark">Confirmar Contraseña</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control bg-light bg-opacity-25 text-dark">
+                                <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••" class="form-control bg-light bg-opacity-25 text-dark">
                                 <small class="form-text text-muted">Solo si vas a modificar la contraseña.</small>
                                 @error('password_confirmation')
                                     <div class="alert alert-danger mt-2 p-2 d-flex align-items-center">
