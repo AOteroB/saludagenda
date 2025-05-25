@@ -21,5 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        // 👇 Fuerza InnoDB como engine en todas las migraciones
+        Schema::defaultTableEngine('InnoDB');
     }
 }
