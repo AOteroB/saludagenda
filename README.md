@@ -56,13 +56,10 @@ npm run dev
 
 💡 **Notas Importantes:**  
 El proyecto incluye assets precompilados, por lo que puede funcionar sin ejecutar npm install ni npm run dev.
-
 Sin embargo, para modificar o compilar los archivos frontend (JS, SCSS, etc.), debes ejecutar ambos comandos.
-
 Si no ejecutas npm run dev, la interfaz podría no reflejar cambios recientes en el frontend.
 
 Por defecto, el proyecto está configurado para usar el driver de correo log, lo que significa que los emails se registran en los logs y no se envían realmente. Esto evita errores si no tienes un servidor SMTP activo en desarrollo.
-
 Si quieres probar el envío real de correos, puedes usar Mailpit como servidor SMTP local. Para ello:
 
 1. Cambia en .env la configuración del mailer a SMTP apuntando a Mailpit (ya configurado en .env.example comentado).
