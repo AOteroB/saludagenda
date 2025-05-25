@@ -11,6 +11,7 @@ use App\Mail\AppointmentCancellation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -103,8 +104,10 @@ class EventController extends Controller
         $event->specialty_id = $specialty->id;
         $event->save();
 
-        // Enviar al usuario mensaje de confirmación de cita
-        Mail::to($event->user->email)->send(new AppointmentConfirmation($event));
+        // Enviar correo solo si el mailer no es log
+        if (Config::get('mail.default') !== 'log') {
+            Mail::to($event->user->email)->send(new AppointmentConfirmation($event));
+        }
     
         // Redirigir al usuario con mensaje de éxito
         return redirect()->route('admin.index')
@@ -159,8 +162,10 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        // Enviar email de cancelación al paciente
-        Mail::to($event->user->email)->send(new AppointmentCancellation($event));
+        // Enviar email de cancelación al paciente solo si el mailer no es log
+        if (Config::get('mail.default') !== 'log') {
+            Mail::to($event->user->email)->send(new AppointmentCancellation($event));
+        } 
 
         //Eliminar la cita
         $event->delete();

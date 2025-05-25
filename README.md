@@ -54,27 +54,37 @@ En otra terminal:
 npm run dev
 ```
 
-💡 **Notas:**  
-El proyecto está preparado para pruebas de envío de correo con Mailpit. Puedes ejecutarlo con:
+💡 **Notas Importantes:**  
+El proyecto incluye assets precompilados, por lo que puede funcionar sin ejecutar npm install ni npm run dev.
 
-```bash
-mailpit
-```
+Sin embargo, para modificar o compilar los archivos frontend (JS, SCSS, etc.), debes ejecutar ambos comandos.
 
-Luego accede a [http://localhost:8025](http://localhost:8025) para ver los correos enviados (confirmaciones, cancelaciones de citas, restablecimiento de contraseña, etc.).
+Si no ejecutas npm run dev, la interfaz podría no reflejar cambios recientes en el frontend.
 
-> **Nota:** `npm run dev` es necesario para compilar los assets con Vite (JS, SCSS, etc).
+Por defecto, el proyecto está configurado para usar el driver de correo log, lo que significa que los emails se registran en los logs y no se envían realmente. Esto evita errores si no tienes un servidor SMTP activo en desarrollo.
 
-## ⚙️ Comandos útiles
+Si quieres probar el envío real de correos, puedes usar Mailpit como servidor SMTP local. Para ello:
 
-- `npm run dev` – Ejecuta Vite en modo desarrollo con recarga automática.
-- `npm run build` – Compila los assets para producción.
+1. Cambia en .env la configuración del mailer a SMTP apuntando a Mailpit (ya configurado en .env.example comentado).
+
+2. Ejecuta Mailpit:
+
+    ```bash
+    mailpit
+    ```
+3. Luego accede a [http://localhost:8025] para ver los correos enviados (confirmaciones, cancelaciones de citas, restablecimiento de contraseña, etc.).
+
+> **Importante:**
+> Ejecutar Mailpit y configurar el .env para SMTP es opcional y solo necesario si quieres pruebas reales de correo.
+
+---
 
 ## 🧪 Testing
 
 ```bash
 php artisan test
 ```
+---
 
 ## 📦 Paquetes destacados
 
@@ -99,6 +109,11 @@ Puedes iniciar sesión con los siguientes usuarios para probar la aplicación co
 | Admin    | admin@admin.com           | 123456789A   |
 | Doctor   | medicina_1@example.com    | 123456789A   |
 | Paciente | paciente0@example.com     | 123456789A   |
+
+> ⚠️ **Importante:**  
+> El resto de los usuarios en la base de datos también tienen la contraseña 123456789A, por lo que puedes usarla para realizar pruebas adicionales con diferentes cuentas.
+
+---
 
 ## 📂 Base de datos
 
