@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
     use RegistersUsers;
-
+protected $forceCreatePatient = false;
     protected $redirectTo = '/admin';
 
     public function __construct()
@@ -28,6 +28,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -46,37 +47,65 @@ class RegisterController extends Controller
         ]);
 
         // Validación personalizada para coincidencia exacta de dni y email
-        if (!empty($data['dni']) && !empty($data['email'])) {
-            $patientExists = Patient::where('dni', $data['dni'])
-                ->where('email', $data['email'])
-                ->exists();
+    if (!empty($data['dni']) && !empty($data['email'])) {
+        $patientExists = Patient::where('dni', $data['dni'])
+                                ->where('email', $data['email'])
+                                ->exists();
 
-            $dniExists = Patient::where('dni', $data['dni'])->exists();
-            $emailExists = Patient::where('email', $data['email'])->exists();
+        $dniExists = Patient::where('dni', $data['dni'])->exists();
+        $emailExists = Patient::where('email', $data['email'])->exists();
 
-            if (!$patientExists && ($dniExists || $emailExists)) {
-                $validator->after(function ($validator) {
-                    $validator->errors()->add('dni', 'El DNI y el email no coinciden con una ficha de paciente existente.');
+        // Si NO existe un paciente exacto
+        if (!$patientExists) {
+
+            // Verifica si están los campos obligatorios completos
+            $hasRequiredPatientFields = 
+                !empty($data['last_name']) &&
+                !empty($data['dob']) &&
+                !empty($data['sex']) &&
+                !empty($data['address']) &&
+                !empty($data['postal_code']) &&
+                !empty($data['phone']);
+
+            if ($hasRequiredPatientFields) {
+                // Añadir reglas para crear el paciente
+                $validator->addRules([
+                    'last_name' => ['required', 'string', 'max:150'],
+                    'dob' => ['required', 'date'],
+                    'dni' => ['required', 'string', 'size:9', 'regex:/^([XYZ]?\d{7,8}[A-Z])$/', 'unique:patients,dni'],
+                    'sex' => ['required', 'in:hombre,mujer'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'postal_code' => ['required', 'string', 'size:5'],
+                    'phone' => ['required', 'string', 'max:15'],
+                    'email' => ['unique:patients,email'],
+                ]);
+            } else {
+                // Mostrar error si no hay paciente y faltan datos obligatorios
+                $validator->after(function ($validator) use ($dniExists, $emailExists) {
+                    if ($dniExists || $emailExists) {
+                        $validator->errors()->add('dni', 'El DNI y el email no coinciden con una ficha de paciente existente.');
+                    } else {
+                        $validator->errors()->add('dni', 'No existe ficha de paciente previa. Debe completar todos los datos obligatorios para crear una nueva ficha.');
+                    }
                 });
             }
         }
-
-        if ($this->shouldCreatePatient($data)) {
-            $validator->addRules([
-            // Si se va a crear el paciente, estos campos deben estar presentes
-            'last_name' => ['required', 'string', 'max:150'],
-            'dob' => ['required', 'date'],
-            'dni' => ['required', 'string', 'size:9', 'regex:/^([XYZ]?\d{7,8}[A-Z])$/', 'unique:patients,dni'],
-            'sex' => ['required', 'in:hombre,mujer'],
-            'address' => ['required', 'string', 'max:255'],
-            'postal_code' => ['required', 'string', 'size:5'],
-            'phone' => ['required', 'string', 'max:15'],
-            'email' => ['unique:patients,email'],
-         ]);
-        }
-
-         return $validator;
     }
+
+    $validator->setAttributeNames([
+        'dob' => 'fecha de nacimiento',
+        'postal_code' => 'código postal',
+        'phone' => 'teléfono',
+        'phone_emergence' => 'teléfono de emergencia',
+        'sex' => 'sexo',
+        'address' => 'dirección',
+        'dni' => 'DNI',
+        'email' => 'email',
+        'password' => 'contraseña',
+    ]);
+
+    return $validator;
+}
 
     /**
      * Determina si debe crearse un paciente nuevo según datos.
