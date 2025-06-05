@@ -10,7 +10,8 @@
 
   <!-- Favicons -->
   <link href="{{ url('dist/img/LogoIndex.png') }}" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">

@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar Sesión | SaludAgenda</title>
 
+    <!-- Favicons -->
+    <link href="{{ url('dist/img/LogoIndex.png') }}" rel="icon">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
   {{-- Fuente e iconos --}}
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>

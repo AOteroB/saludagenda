@@ -85,7 +85,7 @@ protected $forceCreatePatient = false;
                     if ($dniExists || $emailExists) {
                         $validator->errors()->add('dni', 'El DNI y el email no coinciden con una ficha de paciente existente.');
                     } else {
-                        $validator->errors()->add('dni', 'No existe ficha de paciente previa. Debe completar todos los datos obligatorios para crear una nueva ficha.');
+                        $validator->errors()->add('dni', 'No existe ficha de paciente previa. Debe completar todos los datos (tlfn de emergenia opcional) para crear una nueva ficha.');
                     }
                 });
             }

@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Crear Cuenta</title>
+  
+  <!-- Favicons -->
+  <link href="{{ url('dist/img/LogoIndex.png') }}" rel="icon">
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>

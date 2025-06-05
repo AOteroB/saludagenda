@@ -6,6 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Salud Agenda</title>
+    
+    <!-- Favicons -->
+    <link href="{{ url('dist/img/LogoIndex.png') }}" rel="icon">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
     <!-- Fuentes personalizadas y estilos del tema -->
     <link href="{{ url('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
